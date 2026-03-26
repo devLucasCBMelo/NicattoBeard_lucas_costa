@@ -7,5 +7,5 @@ export type CreateUserBody = {
   name: string;
   email: string;
   password: string;
-  role: 'ADMIN' | 'BARBER' | 'CLIENT';
+  role: 'ADMIN' | 'CLIENT';
 };

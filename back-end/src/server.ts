@@ -4,14 +4,16 @@ import { CreateUserBody, LoginType } from './types/index';
 import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middlewares/authMiddleware';
 import specialtyRoutes from './routes/specialtyRoutes';
+import barberRoutes from './routes/barberRoutes';
 
-const prisma = require('./database');
+import prisma from './database';
 const bcrypt = require('bcrypt');
 
 const app = express();
 
 app.use(express.json());
 app.use(specialtyRoutes);
+app.use(barberRoutes);
 
 app.get('/', (req: Request, res: Response) =>
   res.status(200).json({ message: 'Olá Mundo!' })
@@ -23,13 +25,13 @@ app.post(
     try {
       const { name, email, password, role } = req.body;
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const passwordHash = await bcrypt.hash(password, 10);
 
       const user = await prisma.user.create({
         data: {
           name,
           email,
-          password: hashedPassword,
+          passwordHash,
           role,
         },
       });
@@ -55,11 +57,11 @@ app.post('/login', async (req: Request<{}, {}, LoginType>, res: Response) => {
       where: { email },
     });
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
     if (!user) {
       return res.status(401).json({ message: 'E-mail inválido!' });
     }
+
+    const passwordMatch = await bcrypt.compare(password, user.passwordHash);
 
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Senha inválida!' });
@@ -94,6 +96,7 @@ app.post('/login', async (req: Request<{}, {}, LoginType>, res: Response) => {
       },
     });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: 'Erro ao fazer login' });
   }
 });
