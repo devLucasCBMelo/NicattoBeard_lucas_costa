@@ -5,6 +5,12 @@ type CreateSpecialtyInput = {
   description?: string;
 };
 
+type UpdateSpecialInput = {
+  id: string;
+  name?: string;
+  description?: string;
+};
+
 export async function createSpecialtyService({
   name,
   description,
@@ -35,4 +41,40 @@ export async function listSpecialtiesService() {
   });
 
   return specialties;
+}
+
+export async function updateSpecialtyService({
+  id,
+  name,
+  description,
+}: UpdateSpecialInput) {
+  const specialty = await prisma.specialty.findUnique({
+    where: { id },
+  });
+
+  if (!specialty) {
+    throw new Error('Especialidade não encontrada');
+  }
+
+  return prisma.specialty.update({
+    where: { id },
+    data: {
+      name,
+      description,
+    },
+  });
+}
+
+export async function deleteSpecialtyService(id: string) {
+  const specialty = await prisma.specialty.findUnique({
+    where: { id },
+  });
+
+  if (!specialty) {
+    throw new Error('Especialidade não encontrada');
+  }
+
+  await prisma.specialty.delete({
+    where: { id },
+  });
 }

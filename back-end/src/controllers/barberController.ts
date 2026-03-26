@@ -1,11 +1,19 @@
 import { Request, Response } from 'express';
 import {
   createBarberService,
+  deleteBarberService,
   listBarbersService,
+  updateBarberService,
 } from '../services/barberService';
 
 type CreateBarberBody = {
   name: string;
+  age: number;
+  hiredAt: string;
+};
+
+type UpdateBarberBody = {
+  name?: string;
   age: number;
   hiredAt: string;
 };
@@ -45,6 +53,49 @@ export async function listBarbersController(req: Request, res: Response) {
 
     return res.status(200).json(barbers);
   } catch {
+    return res.status(500).json({ message: 'Erro interno do servidor' });
+  }
+}
+
+export async function updateBaberController(
+  req: Request<{ id: string }, {}, UpdateBarberBody>,
+  res: Response
+) {
+  try {
+    const { id } = req.params;
+    const { name, age, hiredAt } = req.body;
+
+    const barber = await updateBarberService({
+      id,
+      name,
+      age,
+      hiredAt: hiredAt ? new Date(hiredAt) : undefined,
+    });
+
+    return res.status(200).json(barber);
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({ message: error.message });
+    }
+
+    return res.status(500).json({ message: 'Erro interno do servidor' });
+  }
+}
+
+export async function deleteBarberController(
+  req: Request<{ id: string }>,
+  res: Response
+) {
+  try {
+    const { id } = req.params;
+
+    await deleteBarberService(id);
+    return res.status(200).json({ message: 'Barbeiro deletado com sucesso' });
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({ message: error.message });
+    }
+
     return res.status(500).json({ message: 'Erro interno do servidor' });
   }
 }
