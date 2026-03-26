@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 import { CreateUserBody, LoginType } from './types/index';
 import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middlewares/authMiddleware';
+import specialtyRoutes from './routes/specialtyRoutes';
 
 const prisma = require('./database');
 const bcrypt = require('bcrypt');
@@ -10,6 +11,7 @@ const bcrypt = require('bcrypt');
 const app = express();
 
 app.use(express.json());
+app.use(specialtyRoutes);
 
 app.get('/', (req: Request, res: Response) =>
   res.status(200).json({ message: 'Olá Mundo!' })

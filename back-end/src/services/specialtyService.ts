@@ -1,4 +1,4 @@
-const prisma = require('./database');
+import prisma from '../database';
 
 type CreateSpecialtyInput = {
   name: string;

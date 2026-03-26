@@ -12,4 +12,4 @@ const prisma = new PrismaClient({
   adapter,
 });
 
-module.exports = prisma;
+export default prisma;
