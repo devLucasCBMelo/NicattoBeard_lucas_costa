@@ -1,15 +1,12 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
-import { CreateUserBody, LoginType } from './types/index';
-import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middlewares/authMiddleware';
 import specialtyRoutes from './routes/specialtyRoutes';
 import barberRoutes from './routes/barberRoutes';
 
-import prisma from './database';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
-const bcrypt = require('bcrypt');
+import barberSpecialtyRoutes from './routes/barberSpecialtyRoutes';
 
 const app = express();
 
@@ -18,92 +15,11 @@ app.use(authRoutes);
 app.use(specialtyRoutes);
 app.use(barberRoutes);
 app.use(userRoutes);
+app.use(barberSpecialtyRoutes);
 
 app.get('/', (req: Request, res: Response) =>
   res.status(200).json({ message: 'Olá Mundo!' })
 );
-
-/* app.post(
-  '/users',
-  async (req: Request<{}, {}, CreateUserBody>, res: Response) => {
-    try {
-      const { name, email, password, role } = req.body;
-
-      const passwordHash = await bcrypt.hash(password, 10);
-
-      const user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          passwordHash,
-          role,
-        },
-      });
-
-      return res.status(201).json({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        createdAt: user.createdAt,
-      });
-    } catch (error) {
-      return res.status(500).json({ message: 'Erro ao criar usuário' });
-    }
-  }
-);
-
-app.post('/login', async (req: Request<{}, {}, LoginType>, res: Response) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (!user) {
-      return res.status(401).json({ message: 'E-mail inválido!' });
-    }
-
-    const passwordMatch = await bcrypt.compare(password, user.passwordHash);
-
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Senha inválida!' });
-    }
-
-    const secret = process.env.JWT_SECRET;
-
-    if (!secret) {
-      return res.status(500).json({ message: 'JWT_SECRET não configurado!' });
-    }
-
-    const token = jwt.sign(
-      {
-        sub: user.id,
-        email: user.email,
-        role: user.role,
-      },
-      secret,
-      {
-        expiresIn: '1d',
-        algorithm: 'HS256',
-      }
-    );
-
-    return res.status(200).json({
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Erro ao fazer login' });
-  }
-}); */
 
 app.get('/me', authMiddleware, async (req: Request, res: Response) => {
   return res.status(200).json({

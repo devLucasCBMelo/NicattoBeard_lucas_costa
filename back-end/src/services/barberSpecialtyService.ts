@@ -51,3 +51,43 @@ export async function attachSpecialtyToBarberService({
 
   return barberSpecialty;
 }
+
+export async function listSpecialtiesByBarberService(barberId: string) {
+  const barber = await prisma.barber.findUnique({
+    where: { id: barberId },
+  });
+
+  if (!barber) {
+    throw new Error('Barbeiro não encontrado');
+  }
+
+  const barberWithSpecialties = await prisma.barber.findUnique({
+    where: { id: barberId },
+    include: {
+      specialties: {
+        include: {
+          specialty: true,
+        },
+      },
+    },
+  });
+
+  return barberWithSpecialties;
+}
+
+export async function listBarbersWithSpecialtiesService() {
+  const barbers = await prisma.barber.findMany({
+    include: {
+      specialties: {
+        include: {
+          specialty: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return barbers;
+}
