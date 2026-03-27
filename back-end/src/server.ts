@@ -7,19 +7,23 @@ import specialtyRoutes from './routes/specialtyRoutes';
 import barberRoutes from './routes/barberRoutes';
 
 import prisma from './database';
+import userRoutes from './routes/userRoutes';
+import authRoutes from './routes/authRoutes';
 const bcrypt = require('bcrypt');
 
 const app = express();
 
 app.use(express.json());
+app.use(authRoutes);
 app.use(specialtyRoutes);
 app.use(barberRoutes);
+app.use(userRoutes);
 
 app.get('/', (req: Request, res: Response) =>
   res.status(200).json({ message: 'Olá Mundo!' })
 );
 
-app.post(
+/* app.post(
   '/users',
   async (req: Request<{}, {}, CreateUserBody>, res: Response) => {
     try {
@@ -99,7 +103,7 @@ app.post('/login', async (req: Request<{}, {}, LoginType>, res: Response) => {
     console.error(error);
     return res.status(500).json({ message: 'Erro ao fazer login' });
   }
-});
+}); */
 
 app.get('/me', authMiddleware, async (req: Request, res: Response) => {
   return res.status(200).json({
