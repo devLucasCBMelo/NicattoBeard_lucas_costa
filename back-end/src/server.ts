@@ -7,6 +7,7 @@ import barberRoutes from './routes/barberRoutes';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import barberSpecialtyRoutes from './routes/barberSpecialtyRoutes';
+import appointmentRoutes from './routes/appointmentsRoutes';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(specialtyRoutes);
 app.use(barberRoutes);
 app.use(userRoutes);
 app.use(barberSpecialtyRoutes);
+app.use(appointmentRoutes);
 
 app.get('/', (req: Request, res: Response) =>
   res.status(200).json({ message: 'Olá Mundo!' })
