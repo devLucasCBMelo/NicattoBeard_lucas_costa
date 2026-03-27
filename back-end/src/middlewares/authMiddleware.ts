@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 type TokenPayload = JwtPayload & {
   sub: string;
   email: string;
-  role: 'ADMIN' | 'BARBER' | 'CLIENT';
+  role: 'ADMIN' | 'CLIENT';
 };
 
 export function authMiddleware(

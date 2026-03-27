@@ -11,8 +11,6 @@ function isValidAppointmentTime(date: Date) {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
-  console.log(`São ${hours} horas e ${minutes} minutos`);
-
   const isValidHour = hours >= 8 && hours < 18;
   const isVlalidMinute = minutes === 0 || minutes === 30;
 
@@ -165,4 +163,57 @@ export async function cancelAppoitmentsService(
   });
 
   return updateAppointment;
+}
+
+export async function listTodayAppointmentsService() {
+  const now = new Date();
+
+  const startOfDay = new Date(now);
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const endOfDay = new Date(now);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  const appointments = await prisma.appointment.findMany({
+    where: {
+      appointmentDate: {
+        gte: startOfDay,
+        lte: endOfDay,
+      },
+      status: 'SCHEDULED',
+    },
+    include: {
+      user: true,
+      barber: true,
+      specialty: true,
+    },
+    orderBy: {
+      appointmentDate: 'asc',
+    },
+  });
+
+  return appointments;
+}
+
+export async function listFutureAppointmentsService() {
+  const now = new Date();
+
+  const appointments = await prisma.appointment.findMany({
+    where: {
+      appointmentDate: {
+        gt: now,
+      },
+      status: 'SCHEDULED',
+    },
+    include: {
+      user: true,
+      barber: true,
+      specialty: true,
+    },
+    orderBy: {
+      appointmentDate: 'asc',
+    },
+  });
+
+  return appointments;
 }
