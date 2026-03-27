@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import cors from 'cors';
 import express, { Request, Response } from 'express';
 import { authMiddleware } from './middlewares/authMiddleware';
 import specialtyRoutes from './routes/specialtyRoutes';
@@ -10,6 +11,12 @@ import barberSpecialtyRoutes from './routes/barberSpecialtyRoutes';
 import appointmentRoutes from './routes/appointmentsRoutes';
 
 const app = express();
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+  })
+);
 
 app.use(express.json());
 app.use(authRoutes);
