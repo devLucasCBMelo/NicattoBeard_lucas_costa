@@ -6,6 +6,8 @@ import { PrivateRoute } from './PrivateRoute';
 import AppointmentsPage from '../pages/Appointments/Appointments';
 import MyAppointmentsPage from '../pages/MyAppointmets/MyAppointmets';
 import SpecialtiesPage from '../pages/Specialties/Specialties';
+import { AdminRoute } from './AdminRoute';
+import AdminDashboardPage from '../pages/AdminDashboard/AdminDashboard';
 
 export function AppRoutes() {
   return (
@@ -45,6 +47,15 @@ export function AppRoutes() {
             <PrivateRoute>
               <SpecialtiesPage />
             </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/admin/dashboard'
+          element={
+            <AdminRoute>
+              <AdminDashboardPage />
+            </AdminRoute>
           }
         />
       </Routes>

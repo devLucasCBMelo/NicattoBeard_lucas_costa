@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { CiCalendar } from 'react-icons/ci';
 import { RiScissors2Fill } from 'react-icons/ri';
@@ -17,14 +17,6 @@ export default function Header() {
   const { user } = useAuth();
   const NavigatetoLoginOrRegister = () => {
     navigate(targetRoute);
-  };
-
-  const NavigateToAppointments = () => {
-    navigate('/appointments');
-  };
-
-  const NavigateToMyAppointments = () => {
-    navigate('/my-appointments');
   };
 
   return (
@@ -55,7 +47,10 @@ export default function Header() {
             </button>
           </div>
           {user ? (
-            <p>Olá, {user?.name}</p>
+            <div>
+              <p>Olá, {user?.name}</p>
+              <Link to='/dashboard'>Perfil</Link>
+            </div>
           ) : (
             <button onClick={NavigatetoLoginOrRegister}>{buttonText}</button>
           )}

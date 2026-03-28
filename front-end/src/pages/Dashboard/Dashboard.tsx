@@ -20,6 +20,15 @@ export default function Dashboard() {
           <li>
             <Link to='/my-appointments'>Meus Agendamentos</Link>
           </li>
+          <li>
+            <Link to='/specialties'>Especialidades</Link>
+          </li>
+
+          {user?.role === 'ADMIN' && (
+            <li>
+              <Link to='/admin/dashboard'>Dashboard Admin</Link>
+            </li>
+          )}
         </ul>
       </nav>
 
