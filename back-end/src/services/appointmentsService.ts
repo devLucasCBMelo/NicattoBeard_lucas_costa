@@ -217,3 +217,8 @@ export async function listFutureAppointmentsService() {
 
   return appointments;
 }
+
+export async function listAppointmentsByBarberAndDAteService(
+  barberId: string,
+  date: string
+) {}

@@ -4,6 +4,7 @@ import { CiCalendar } from 'react-icons/ci';
 import { RiScissors2Fill } from 'react-icons/ri';
 import { MdOutlineDashboard } from 'react-icons/md';
 import { BsStars } from 'react-icons/bs';
+import styled from './index.module.css';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -14,17 +15,22 @@ export default function Header() {
   const targetRoute = isLogin ? '/register' : '/login';
 
   const { user } = useAuth();
-  const GotoLogin = () => {
+  const NavigatetoLoginOrRegister = () => {
     navigate(targetRoute);
   };
+
+  const NavigateToAppointments = () => {
+    navigate('/appointments');
+  };
+
   return (
     <div>
-      <div>
+      <div className={styled.container}>
         <h1>NicattoBeard</h1>
-        <nav>
+        <nav className={styled.nav_container}>
           <div>
             <CiCalendar />
-            <button>Agendar</button>
+            <button onClick={NavigateToAppointments}>Agendar</button>
           </div>
           <div>
             <RiScissors2Fill />
@@ -41,9 +47,9 @@ export default function Header() {
             <button>Especialidades</button>
           </div>
           {user ? (
-            <p>`Olá, ${user?.name}`</p>
+            <p>Olá, {user?.name}</p>
           ) : (
-            <button onClick={GotoLogin}>{buttonText}</button>
+            <button onClick={NavigatetoLoginOrRegister}>{buttonText}</button>
           )}
         </nav>
       </div>
