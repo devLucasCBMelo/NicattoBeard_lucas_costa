@@ -2,12 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import type { Barber } from '../../types/barberTypes';
 import Header from '../../components/Header';
 import { api } from '../../services/api';
+import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 
-function generateNextDays(totalDays = 7) {
+function generateNextDays(totalDays = 7, startOffset = 0) {
   const days: Date[] = [];
   for (let i = 0; i < totalDays; i++) {
     const date = new Date();
-    date.setDate(date.getDate() + i);
+    date.setDate(date.getDate() + startOffset + i);
     days.push(date);
   }
 
@@ -45,10 +46,14 @@ export default function AppointmentsPage() {
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [selectedSpecialtyId, setSelectedSpecialtyId] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [daysOffset, setDaysOffset] = useState(0);
 
   const [unavailableTimes, setUnavailableTimes] = useState<string[]>([]);
 
-  const availableDays = useMemo(() => generateNextDays(7), []);
+  const availableDays = useMemo(() => {
+    return generateNextDays(7, daysOffset);
+  }, [daysOffset]);
+
   const timeSlots = useMemo(() => generateTimeSlots(), []);
 
   const selectedBarber = useMemo(() => {
@@ -60,6 +65,14 @@ export default function AppointmentsPage() {
 
     return selectedBarber.specialties.map((item) => item.specialty);
   }, [selectedBarber]);
+
+  const handlePreviousDays = () => {
+    setDaysOffset((prev) => Math.max(prev - 7, 0));
+  };
+
+  const handleNextDays = () => {
+    setDaysOffset((prev) => prev + 7);
+  };
 
   useEffect(() => {
     async function fetchBarbers() {
@@ -184,6 +197,13 @@ export default function AppointmentsPage() {
         <h2>2. Escolha a data</h2>
 
         <div>
+          <button
+            type='button'
+            onClick={handlePreviousDays}
+            disabled={daysOffset === 0}
+          >
+            <IoArrowBack />
+          </button>
           {availableDays.map((date) => {
             const isSelected =
               selectedDate &&
@@ -205,6 +225,9 @@ export default function AppointmentsPage() {
               </button>
             );
           })}
+          <button type='button' onClick={handleNextDays}>
+            <IoArrowForward />
+          </button>
         </div>
       </section>
 

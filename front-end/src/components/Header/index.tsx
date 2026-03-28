@@ -23,6 +23,10 @@ export default function Header() {
     navigate('/appointments');
   };
 
+  const NavigateToMyAppointments = () => {
+    navigate('/my-appointments');
+  };
+
   return (
     <div>
       <div className={styled.container}>
@@ -34,7 +38,9 @@ export default function Header() {
           </div>
           <div>
             <RiScissors2Fill />
-            <button>Meus Agendamentos</button>
+            <button onClick={NavigateToMyAppointments}>
+              Meus Agendamentos
+            </button>
           </div>
 
           <div>
