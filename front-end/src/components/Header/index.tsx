@@ -34,11 +34,11 @@ export default function Header() {
         <nav className={styled.nav_container}>
           <div>
             <CiCalendar />
-            <button onClick={NavigateToAppointments}>Agendar</button>
+            <button onClick={() => navigate('/appointments')}>Agendar</button>
           </div>
           <div>
             <RiScissors2Fill />
-            <button onClick={NavigateToMyAppointments}>
+            <button onClick={() => navigate('/my-appointments')}>
               Meus Agendamentos
             </button>
           </div>
@@ -50,7 +50,9 @@ export default function Header() {
 
           <div>
             <BsStars />
-            <button>Especialidades</button>
+            <button onClick={() => navigate('/specialties')}>
+              Especialidades
+            </button>
           </div>
           {user ? (
             <p>Olá, {user?.name}</p>

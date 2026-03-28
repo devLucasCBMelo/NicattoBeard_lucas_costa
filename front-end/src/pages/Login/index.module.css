@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  background-color: #2C2926;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.email_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.email_container label {
+  color: #D99D26;
+}
+
+.email_container input {
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #D99D26;
+
+  height: 2rem;
+
+  color: #D99D26;
+  background-color: #2C2926;
+}
+
+.password_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.password_container label {
+  color: #D99D26;
+}
+
+.password_container input {
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #D99D26;
+
+  height: 2rem;
+
+  color: #D99D26;
+  background-color: #2C2926;
+}
+
+.login_button {
+  border-radius: 10px;
+  border-width: 1px;
+  height: 2rem;
+
+  color: #D99D26;
+  background-color: #1C1A17;
+  border-color: #D99D26;
+
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+
+  cursor: pointer;
+}

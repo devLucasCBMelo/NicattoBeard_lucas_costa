@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
+import styles from './index.module.css';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -27,29 +28,33 @@ export default function LoginPage() {
       <Header />
       <h1>Login</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>E-mail</label>
-          <input
-            type='email'
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </div>
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.email_container}>
+            <label>E-mail</label>
+            <input
+              type='email'
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Senha</label>
-          <input
-            type='password'
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </div>
+          <div className={styles.password_container}>
+            <label>Senha</label>
+            <input
+              type='password'
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+          </div>
 
-        <button type='submit'>Entrar</button>
-      </form>
+          <button type='submit' className={styles.login_button}>
+            Entrar
+          </button>
+        </form>
+      </div>
     </>
   );
 }

@@ -5,6 +5,7 @@ import DashboardPage from '../pages/Dashboard/Dashboard';
 import { PrivateRoute } from './PrivateRoute';
 import AppointmentsPage from '../pages/Appointments/Appointments';
 import MyAppointmentsPage from '../pages/MyAppointmets/MyAppointmets';
+import SpecialtiesPage from '../pages/Specialties/Specialties';
 
 export function AppRoutes() {
   return (
@@ -34,6 +35,15 @@ export function AppRoutes() {
           element={
             <PrivateRoute>
               <DashboardPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/specialties'
+          element={
+            <PrivateRoute>
+              <SpecialtiesPage />
             </PrivateRoute>
           }
         />
