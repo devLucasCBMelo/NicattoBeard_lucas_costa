@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import {
   cancelAppoitmentsService,
   createAppointmentService,
+  listAppointmentsByBarberAndDAteService,
   listFutureAppointmentsService,
   listMyAppointmentsService,
   listTodayAppointmentsService,
@@ -117,6 +118,47 @@ export async function listFutureAppointmentsController(
 
     return res.status(200).json(appointments);
   } catch {
+    return res.status(500).json({ message: 'Erro interno do servidor' });
+  }
+}
+
+type ListAppointmentsByBarberParams = {
+  barberId: string;
+};
+
+type ListAppointmentsByBarberQuery = {
+  date: string;
+};
+
+export async function listAppointmentsByBarberAndDateController(
+  req: Request<
+    ListAppointmentsByBarberParams,
+    {},
+    {},
+    ListAppointmentsByBarberQuery
+  >,
+  res: Response
+) {
+  try {
+    const { barberId } = req.params;
+    const date = req.query.date;
+
+    if (!date || typeof date !== 'string') {
+      return res.status(400).json({
+        message: 'A query param "date" é obrigatória no formato YYYY-MM-DD',
+      });
+    }
+
+    const appointments = await listAppointmentsByBarberAndDAteService(
+      barberId,
+      date
+    );
+    return res.status(200).json(appointments);
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({ message: error.message });
+    }
+
     return res.status(500).json({ message: 'Erro interno do servidor' });
   }
 }

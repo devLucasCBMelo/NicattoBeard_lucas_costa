@@ -221,4 +221,48 @@ export async function listFutureAppointmentsService() {
 export async function listAppointmentsByBarberAndDAteService(
   barberId: string,
   date: string
-) {}
+) {
+  const barber = await prisma.barber.findUnique({
+    where: { id: barberId },
+  });
+
+  if (!barber) {
+    throw new Error('Barbeiro não encontrado');
+  }
+
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!datePattern.test(date)) {
+    throw new Error('A data deve estar no formato YYYY-MM-DD');
+  }
+
+  const [year, month, day] = date.split('-').map(Number);
+
+  const startOfDay = new Date(year, month - 1, day, 0, 0, 0, 0);
+  const endOfDay = new Date(year, month - 1, day, 23, 59, 59, 999);
+
+  if (isNaN(startOfDay.getTime()) || isNaN(endOfDay.getTime())) {
+    throw new Error('Data inválida');
+  }
+
+  const appointments = await prisma.appointment.findMany({
+    where: {
+      barberId,
+      status: 'SCHEDULED',
+      appointmentDate: {
+        gte: startOfDay,
+        lte: endOfDay,
+      },
+    },
+    select: {
+      id: true,
+      appointmentDate: true,
+      status: true,
+    },
+    orderBy: {
+      appointmentDate: 'asc',
+    },
+  });
+
+  return appointments;
+}

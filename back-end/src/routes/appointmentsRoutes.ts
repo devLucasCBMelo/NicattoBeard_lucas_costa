@@ -3,6 +3,7 @@ import { authMiddleware } from '../middlewares/authMiddleware';
 import {
   cancelAppointmentController,
   createAppointmentController,
+  listAppointmentsByBarberAndDateController,
   listFutureAppointmentsController,
   listMyAppointmentsController,
   listTodayAppointmentsController,
@@ -39,6 +40,12 @@ appointmentRoutes.get(
   authMiddleware,
   authRoleMiddleware('ADMIN'),
   listFutureAppointmentsController
+);
+
+appointmentRoutes.get(
+  '/barbers/:barberId/appointments',
+  authMiddleware,
+  listAppointmentsByBarberAndDateController
 );
 
 export default appointmentRoutes;

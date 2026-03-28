@@ -87,7 +87,21 @@ export default function AppointmentsPage() {
       if (!selectedBarberId || !selectedDate) return;
 
       try {
-        setUnavailableTimes([]);
+        const formattedDate = formatDateToYYYYMMDD(selectedDate);
+        const response = await api.get(
+          `/barbers/${selectedBarberId}/appointments?date=${formattedDate}`
+        );
+        const bookedTimes = response.data.map(
+          (appointment: { appointmentDate: string }) => {
+            const date = new Date(appointment.appointmentDate);
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${hours}:${minutes}`;
+          }
+        );
+
+        setUnavailableTimes(bookedTimes);
       } catch (error) {
         console.error(error);
         setUnavailableTimes([]);
@@ -221,7 +235,11 @@ export default function AppointmentsPage() {
       <section>
         <h2>4. Escolha a especialidade</h2>
 
-        <select>
+        <select
+          value={selectedSpecialtyId}
+          onChange={(event) => setSelectedSpecialtyId(event.target.value)}
+          disabled={!selectedBarberId}
+        >
           <option value=''>Selecione uma especialidade</option>
           {specialtiesOfSelectedBarber.map((specialty) => (
             <option key={specialty.id} value={specialty.id}>
