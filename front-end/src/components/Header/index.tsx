@@ -37,7 +37,7 @@ export default function Header() {
 
           <div>
             <MdOutlineDashboard />
-            <button>Barbeiros</button>
+            <button onClick={() => navigate('/barbers')}>Barbeiros</button>
           </div>
 
           <div>

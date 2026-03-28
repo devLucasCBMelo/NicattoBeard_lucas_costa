@@ -5,12 +5,14 @@ import {
   listBarbersWithSpecialtiesController,
   listSpecialtiesByBarberController,
 } from '../controllers/barberSpecialtyController';
+import { authRoleMiddleware } from '../middlewares/authRoleMiddleware';
 
 const barberSpecialtyRoutes = Router();
 
 barberSpecialtyRoutes.post(
   '/barbers/:barberId/specialties/:specialtyId',
   authMiddleware,
+  authRoleMiddleware('ADMIN'),
   attachSpecialtyToBarberController
 );
 

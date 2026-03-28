@@ -8,6 +8,7 @@ import MyAppointmentsPage from '../pages/MyAppointmets/MyAppointmets';
 import SpecialtiesPage from '../pages/Specialties/Specialties';
 import { AdminRoute } from './AdminRoute';
 import AdminDashboardPage from '../pages/AdminDashboard/AdminDashboard';
+import BarbersPage from '../pages/Barbers/Barbers';
 
 export function AppRoutes() {
   return (
@@ -55,6 +56,15 @@ export function AppRoutes() {
           element={
             <AdminRoute>
               <AdminDashboardPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path='/barbers'
+          element={
+            <AdminRoute>
+              <BarbersPage />
             </AdminRoute>
           }
         />
