@@ -66,6 +66,9 @@
   background-color: #1C1A17;
   border-radius: 0.75rem;
   padding: 1.5rem;
+
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 .section2 {
@@ -74,6 +77,33 @@
   margin-left: 1rem;
   margin-right: 1rem;
 }
+
+.arrow_button {
+border: 1px solid #333;
+border-radius: 16px;
+color: #c5a059;
+cursor: pointer;
+
+transition: all 0.3s ease;
+}
+
+.arrow_button:hover {
+  border-color: #c5a059;
+  background-color: #222;
+}
+
+.arrow_button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+}
+
 
 .section3 {
   height: 100%;

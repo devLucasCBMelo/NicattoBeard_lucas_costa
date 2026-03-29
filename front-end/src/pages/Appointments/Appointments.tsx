@@ -6,6 +6,7 @@ import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import styles from './index.module.css';
 import BarberCard from '../../components/BarberCard/BarberCard';
 import DateButton from '../../components/DateButton/DateButton';
+import TimeSlotButton from '../../components/TimeSlotButton/TimeSlotButton';
 
 function generateNextDays(totalDays = 7, startOffset = 0) {
   const days: Date[] = [];
@@ -212,8 +213,9 @@ export default function AppointmentsPage() {
                 type='button'
                 onClick={handlePreviousDays}
                 disabled={daysOffset === 0}
+                className={styles.arrow_button}
               >
-                <IoArrowBack />
+                <IoArrowBack className={styles.icon} />
               </button>
               {availableDays.map((date) => {
                 const isSelected =
@@ -230,8 +232,12 @@ export default function AppointmentsPage() {
                   />
                 );
               })}
-              <button type='button' onClick={handleNextDays}>
-                <IoArrowForward />
+              <button
+                type='button'
+                onClick={handleNextDays}
+                className={styles.arrow_button}
+              >
+                <IoArrowForward className={styles.icon} />
               </button>
             </div>
           </section>
@@ -252,16 +258,14 @@ export default function AppointmentsPage() {
                 const isSelected = selectedTime === slot;
 
                 return (
-                  <button
+                  <TimeSlotButton
                     key={slot}
-                    type='button'
-                    onClick={() => setSelectedTime(slot)}
-                    disabled={!selectedDate || isUnavailable}
-                  >
-                    {slot}
-                    {isSelected ? ' (selecionado)' : ''}
-                    {isUnavailable ? ' (indisponível)' : ''}
-                  </button>
+                    isSelected={isSelected}
+                    isUnavailable={isUnavailable}
+                    selectedDate={selectedDate}
+                    setSelectedTime={setSelectedTime}
+                    slot={slot}
+                  />
                 );
               })}
             </div>

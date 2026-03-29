@@ -1,0 +1,55 @@
+.timeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 120px;
+  height: 40px;
+  border-radius: 8px;
+  padding: 0 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.timeButton:hover:not(:disabled):not(.selected) {
+  border-color: #666;
+  background-color: #222;
+}
+
+.selected {
+  background-color: rgba(197, 160, 89, 0.1);
+  border-color: #c5a059;
+  color: #000;
+  font-weight: 600;
+}
+
+.timeLabel {
+  background-color: transparent;
+  color: #fff;
+}
+
+.timeButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.statusText {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.selected .statusText {
+  opacity: 1;
+  color: #333;
+}
