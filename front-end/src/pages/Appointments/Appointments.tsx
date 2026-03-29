@@ -166,9 +166,9 @@ export default function AppointmentsPage() {
   }
 
   return (
-    <>
+    <main className={styles.container}>
       <Header />
-      <div className={styles.container}>
+      <div className={styles.content}>
         <div className={styles.title_container}>
           <h1 className={styles.title1}>
             Agende seu <span className={styles.title2}>Horário</span>
@@ -336,6 +336,6 @@ export default function AppointmentsPage() {
           </section>
         )}
       </div>
-    </>
+    </main>
   );
 }

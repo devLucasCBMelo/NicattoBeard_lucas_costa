@@ -25,9 +25,9 @@ export default function LoginPage() {
   };
 
   return (
-    <>
+    <main className={styles.container}>
       <Header />
-      <div className={styles.container}>
+      <div className={styles.content}>
         <section className={styles.section}>
           <div className={styles.image_container}>
             <img
@@ -66,6 +66,6 @@ export default function LoginPage() {
           </form>
         </section>
       </div>
-    </>
+    </main>
   );
 }

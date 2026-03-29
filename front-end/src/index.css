@@ -1,6 +1,19 @@
+/* index.css */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #1C1A16;
+}
+
+/* Configuração da base do site */
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0c0c0c; /* A cor preta da sua marca */
+  color: #fff; /* Texto branco por padrão */
+  font-family: 'Inter', sans-serif; /* Ou a fonte que estiver usando */
+}
+
+#root {
+  min-height: 100vh;
 }

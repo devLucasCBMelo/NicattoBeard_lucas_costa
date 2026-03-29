@@ -53,7 +53,6 @@
   line-height: 1;
   margin-bottom: 2px;
 
-  background-color: transparent;
 }
 
 .month {
@@ -61,5 +60,4 @@
   font-size: 12px;
   text-transform: lowercase;
 
-  background-color: transparent;
 }

@@ -151,7 +151,7 @@ export default function BarbersPage() {
   }, []);
 
   return (
-    <div>
+    <main>
       <Header />
       <h1>Barbeiros</h1>
 
@@ -258,6 +258,6 @@ export default function BarbersPage() {
           </div>
         )}
       </section>
-    </div>
+    </main>
   );
 }
