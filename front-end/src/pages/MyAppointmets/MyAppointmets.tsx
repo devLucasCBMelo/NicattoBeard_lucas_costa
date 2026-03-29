@@ -1,6 +1,8 @@
 import Header from '../../components/Header';
 import { api } from '../../services/api';
 import { useEffect, useState } from 'react';
+import styles from './index.module.css';
+import AppointmentCard from '../../components/AppointmentCard/AppointmentCard';
 
 type Barber = {
   id: string;
@@ -79,62 +81,25 @@ export default function MyAppointmentsPage() {
   return (
     <div>
       <Header />
-      <h1>Meus Agendamentos</h1>
+      <div className={styles.title_container}>
+        <h1 className={styles.title1}>
+          Acompanhe seus <span className={styles.title2}>Agendamentos</span>
+        </h1>
+        <p>Veja aqui seus agendamentos, você pode cancelá-los se quiser.</p>
+      </div>
 
       {appointments.length === 0 ? (
         <p>Você ainda não possui agendamentos.</p>
       ) : (
-        <div>
-          {appointments.map((appointment) => {
-            const formattedDate = new Date(
-              appointment.appointmentDate
-            ).toLocaleDateString('pt-BR');
-
-            const formattedTime = new Date(
-              appointment.appointmentDate
-            ).toLocaleTimeString('pt-BR', {
-              hour: '2-digit',
-              minute: '2-digit',
-            });
-
-            const isCanceled = appointment.status === 'CANCELED';
-            return (
-              <div key={appointment.id}>
-                <p>
-                  <strong>Barbeiro:</strong> {appointment.barber.name}
-                </p>
-
-                <p>
-                  <strong>Especialidade</strong> {appointment.specialty.name}
-                </p>
-
-                <p>
-                  <strong>Data:</strong> {formattedDate}
-                </p>
-
-                <p>
-                  <strong>Horário:</strong> {formattedTime}
-                </p>
-
-                <p>
-                  <strong>Status:</strong>{' '}
-                  {appointment.status === 'CANCELED' ? 'CANCELADO' : 'AGENDADO'}
-                </p>
-
-                {!isCanceled && (
-                  <button
-                    type='button'
-                    onClick={() => handleCancelAppointment(appointment.id)}
-                    disabled={cancelingId === appointment.id}
-                  >
-                    {cancelingId === appointment.id
-                      ? 'Cancelando...'
-                      : 'Cancelar agendamento'}
-                  </button>
-                )}
-              </div>
-            );
-          })}
+        <div className={styles.appointments_list}>
+          {appointments.map((appointment) => (
+            <AppointmentCard
+              key={appointment.id}
+              appointment={appointment}
+              onCancel={handleCancelAppointment}
+              isCanceling={cancelingId === appointment.id}
+            />
+          ))}
         </div>
       )}
     </div>
