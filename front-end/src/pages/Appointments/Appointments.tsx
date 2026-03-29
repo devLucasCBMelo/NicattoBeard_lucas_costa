@@ -5,6 +5,7 @@ import { api } from '../../services/api';
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import styles from './index.module.css';
 import BarberCard from '../../components/BarberCard/BarberCard';
+import DateButton from '../../components/DateButton/DateButton';
 
 function generateNextDays(totalDays = 7, startOffset = 0) {
   const days: Date[] = [];
@@ -221,19 +222,12 @@ export default function AppointmentsPage() {
                     formatDateToYYYYMMDD(date);
 
                 return (
-                  <button
-                    key={date.toISOString()}
-                    type='button'
-                    onClick={() => setSelectedDate(date)}
-                    disabled={!selectedBarberId}
-                  >
-                    {date.toLocaleDateString('pt-BR', {
-                      weekday: 'short',
-                      day: '2-digit',
-                      month: '2-digit',
-                    })}
-                    {isSelected ? ' (selecionada)' : ''}
-                  </button>
+                  <DateButton
+                    date={date}
+                    isSelected={isSelected}
+                    setSelectedDate={setSelectedDate}
+                    selectedBarberId={selectedBarberId}
+                  />
                 );
               })}
               <button type='button' onClick={handleNextDays}>
