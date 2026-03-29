@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
-import { IoMdCloseCircle } from 'react-icons/io';
 import Header from '../../components/Header';
+import styles from './index.module.css';
+import HiredBarberCard from '../../components/HiredBarberCard/HiredBarberCard';
 
 type Barber = {
   id: string;
@@ -153,7 +154,12 @@ export default function BarbersPage() {
   return (
     <main>
       <Header />
-      <h1>Barbeiros</h1>
+      <div className={styles.title_container}>
+        <h1 className={styles.title1}>
+          Lista de <span className={styles.title2}>Barbeiros</span>
+        </h1>
+        <p>Crie, edite ou delete um barbeiro</p>
+      </div>
 
       {isAdmin && (
         <section>
@@ -222,38 +228,15 @@ export default function BarbersPage() {
         ) : barbers.length === 0 ? (
           <p>Nenhum barbeiro cadastrado.</p>
         ) : (
-          <div>
+          <div className={styles.barbers_list}>
             {barbers.map((barber) => (
-              <div key={barber.id}>
-                {isAdmin && (
-                  <div>
-                    <button
-                      type='button'
-                      onClick={() => handleStartEdit(barber)}
-                      aria-label={`Editar ${barber.name}`}
-                      title='Editar'
-                    >
-                      ✏️
-                    </button>
-
-                    <IoMdCloseCircle
-                      type='button'
-                      onClick={() => handleDeleteBarber(barber.id)}
-                      aria-label={`Deletar ${barber.name}`}
-                      title='Deletar'
-                      fill='red'
-                      size={25}
-                    />
-                  </div>
-                )}
-
-                <h3>{barber.name}</h3>
-                <p>Idade: {barber.age}</p>
-                <p>
-                  Contratado em:{' '}
-                  {new Date(barber.hiredAt).toLocaleDateString('pt-BR')}
-                </p>
-              </div>
+              <HiredBarberCard
+                key={barber.id}
+                barber={barber}
+                isAdmin={isAdmin}
+                onEdit={handleStartEdit}
+                onDelete={handleDeleteBarber}
+              />
             ))}
           </div>
         )}

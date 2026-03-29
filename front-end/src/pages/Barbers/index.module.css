@@ -1,0 +1,5 @@
+.barbers_list {
+  display: flex;
+  margin-top: 2rem;
+  gap: 1rem;
+}
