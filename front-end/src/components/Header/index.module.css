@@ -61,6 +61,16 @@
   background-color: #D99D26;
 }
 
+.icon {
+  color: #D99D26;
+}
+
+.button_container:hover .icon {
+  color: #1C1A17;
+  background-color: #D99D26;
+}
+
+
 .user {
   color: #D99D26;
   font-family: Arial, Helvetica, sans-serif;

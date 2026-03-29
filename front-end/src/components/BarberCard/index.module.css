@@ -1,0 +1,52 @@
+.card_container {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(50, 46, 42);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  
+  font-family: inherit;
+  animation-duration: 300ms;
+
+}
+
+.card_container:hover {
+  border: 1px solid rgb(217, 157, 38);
+}
+
+.barber_name {
+  color: #efece7
+}
+
+.barber_age {
+  color: #988C81;
+  font-size: 0.75rem;
+  line-height: 1rem;
+
+  margin-top: 0.125rem;
+
+  box-sizing: border-box;
+}
+
+.specialty_container {
+  gap: 0.375rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+
+  box-sizing: border-box;
+}
+
+.specialty {
+  color: #D99D26;
+  background-color: #D99D261A;
+  font-size: 10px;
+  border: 1px solid #D99D26;
+  border-radius: 9999px;
+
+  padding: 0.125rem 0.5rem;
+}

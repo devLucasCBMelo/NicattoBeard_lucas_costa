@@ -26,7 +26,7 @@ export default function Header() {
               className={styled.button_container}
               onClick={() => navigate('/appointments')}
             >
-              <CiCalendar size={25} />
+              <CiCalendar className={styled.icon} size={25} />
               Agendar
             </button>
 
@@ -34,7 +34,7 @@ export default function Header() {
               className={styled.button_container}
               onClick={() => navigate('/my-appointments')}
             >
-              <RiScissors2Fill size={25} />
+              <RiScissors2Fill className={styled.icon} size={25} />
               Meus Agendamentos
             </button>
 
@@ -42,7 +42,7 @@ export default function Header() {
               className={styled.button_container}
               onClick={() => navigate('/barbers')}
             >
-              <MdOutlineDashboard size={25} />
+              <MdOutlineDashboard className={styled.icon} size={25} />
               Barbeiros
             </button>
 
@@ -50,7 +50,7 @@ export default function Header() {
               className={styled.button_container}
               onClick={() => navigate('/specialties')}
             >
-              <BsStars size={25} />
+              <BsStars className={styled.icon} size={25} />
               Especialidades
             </button>
           </nav>

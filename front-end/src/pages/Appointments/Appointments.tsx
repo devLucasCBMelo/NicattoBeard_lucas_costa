@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import { api } from '../../services/api';
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import styles from './index.module.css';
+import BarberCard from '../../components/BarberCard/BarberCard';
 
 function generateNextDays(totalDays = 7, startOffset = 0) {
   const days: Date[] = [];
@@ -181,132 +182,135 @@ export default function AppointmentsPage() {
           </p>
         </div>
 
-        <section>
+        <section className={styles.section1}>
           <h2 className={styles.section_title}>
             <span className={styles.circle_background}>1</span>{' '}
             <span className={styles.section_title_text}>
               Escolha o barbeiro
             </span>
           </h2>
-          <div>
+          <div className={styles.section1_content}>
             {barbers.map((barber) => (
-              <button
-                key={barber.id}
-                type='button'
-                onClick={() => setSelectedBarberId(barber.id)}
-              >
-                <strong>{barber.name}</strong>
-                <div>{barber.age} anos</div>
-                <div>
-                  {barber.specialties.map((item) => (
-                    <span key={item.specialty.id}>{item.specialty.name}</span>
-                  ))}
-                </div>
-              </button>
+              <BarberCard
+                barber={barber}
+                setSelectedBarberId={setSelectedBarberId}
+              />
             ))}
           </div>
         </section>
 
-        <section>
-          <h2 className={styles.section_title}>
-            <span className={styles.circle_background}>2</span>{' '}
-            <span className={styles.section_title_text}>Escolha a data</span>
-          </h2>
+        {selectedBarber && (
+          <section className={styles.section2}>
+            <h2 className={styles.section_title}>
+              <span className={styles.circle_background}>2</span>{' '}
+              <span className={styles.section_title_text}>Escolha a data</span>
+            </h2>
 
-          <div>
+            <div className={styles.section1_content}>
+              <button
+                type='button'
+                onClick={handlePreviousDays}
+                disabled={daysOffset === 0}
+              >
+                <IoArrowBack />
+              </button>
+              {availableDays.map((date) => {
+                const isSelected =
+                  selectedDate &&
+                  formatDateToYYYYMMDD(selectedDate) ===
+                    formatDateToYYYYMMDD(date);
+
+                return (
+                  <button
+                    key={date.toISOString()}
+                    type='button'
+                    onClick={() => setSelectedDate(date)}
+                    disabled={!selectedBarberId}
+                  >
+                    {date.toLocaleDateString('pt-BR', {
+                      weekday: 'short',
+                      day: '2-digit',
+                      month: '2-digit',
+                    })}
+                    {isSelected ? ' (selecionada)' : ''}
+                  </button>
+                );
+              })}
+              <button type='button' onClick={handleNextDays}>
+                <IoArrowForward />
+              </button>
+            </div>
+          </section>
+        )}
+
+        {selectedDate && (
+          <section className={styles.section3}>
+            <h2 className={styles.section_title}>
+              <span className={styles.circle_background}>3</span>{' '}
+              <span className={styles.section_title_text}>
+                Escolha o horário
+              </span>
+            </h2>
+
+            <div className={styles.section1_content}>
+              {timeSlots.map((slot) => {
+                const isUnavailable = unavailableTimes.includes(slot);
+                const isSelected = selectedTime === slot;
+
+                return (
+                  <button
+                    key={slot}
+                    type='button'
+                    onClick={() => setSelectedTime(slot)}
+                    disabled={!selectedDate || isUnavailable}
+                  >
+                    {slot}
+                    {isSelected ? ' (selecionado)' : ''}
+                    {isUnavailable ? ' (indisponível)' : ''}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {selectedTime && (
+          <section className={styles.section4}>
+            <h2 className={styles.section_title}>
+              <span className={styles.circle_background}>4</span>{' '}
+              <span className={styles.section_title_text}>
+                Escolha a especialidade
+              </span>
+            </h2>
+
+            <div className={styles.section1_content}>
+              <select
+                value={selectedSpecialtyId}
+                onChange={(event) => setSelectedSpecialtyId(event.target.value)}
+                disabled={!selectedBarberId}
+              >
+                <option value=''>Selecione uma especialidade</option>
+                {specialtiesOfSelectedBarber.map((specialty) => (
+                  <option key={specialty.id} value={specialty.id}>
+                    {specialty.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </section>
+        )}
+
+        <section className={styles.section5}>
+          <div className={styles.section1_content}>
             <button
               type='button'
-              onClick={handlePreviousDays}
-              disabled={daysOffset === 0}
+              onClick={handleCreateAppointment}
+              disabled={loading}
             >
-              <IoArrowBack />
-            </button>
-            {availableDays.map((date) => {
-              const isSelected =
-                selectedDate &&
-                formatDateToYYYYMMDD(selectedDate) ===
-                  formatDateToYYYYMMDD(date);
-
-              return (
-                <button
-                  key={date.toISOString()}
-                  type='button'
-                  onClick={() => setSelectedDate(date)}
-                  disabled={!selectedBarberId}
-                >
-                  {date.toLocaleDateString('pt-BR', {
-                    weekday: 'short',
-                    day: '2-digit',
-                    month: '2-digit',
-                  })}
-                  {isSelected ? ' (selecionada)' : ''}
-                </button>
-              );
-            })}
-            <button type='button' onClick={handleNextDays}>
-              <IoArrowForward />
+              {loading ? 'Agendando...' : 'Confirmar Agendamento'}
             </button>
           </div>
         </section>
-
-        <section>
-          <h2 className={styles.section_title}>
-            <span className={styles.circle_background}>3</span>{' '}
-            <span className={styles.section_title_text}>Escolha o horário</span>
-          </h2>
-
-          <div>
-            {timeSlots.map((slot) => {
-              const isUnavailable = unavailableTimes.includes(slot);
-              const isSelected = selectedTime === slot;
-
-              return (
-                <button
-                  key={slot}
-                  type='button'
-                  onClick={() => setSelectedTime(slot)}
-                  disabled={!selectedDate || isUnavailable}
-                >
-                  {slot}
-                  {isSelected ? ' (selecionado)' : ''}
-                  {isUnavailable ? ' (indisponível)' : ''}
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        <section>
-          <h2 className={styles.section_title}>
-            <span className={styles.circle_background}>4</span>{' '}
-            <span className={styles.section_title_text}>
-              Escolha a especialidade
-            </span>
-          </h2>
-
-          <select
-            value={selectedSpecialtyId}
-            onChange={(event) => setSelectedSpecialtyId(event.target.value)}
-            disabled={!selectedBarberId}
-          >
-            <option value=''>Selecione uma especialidade</option>
-            {specialtiesOfSelectedBarber.map((specialty) => (
-              <option key={specialty.id} value={specialty.id}>
-                {specialty.name}
-              </option>
-            ))}
-          </select>
-        </section>
-
-        <section></section>
-
-        <button
-          type='button'
-          onClick={handleCreateAppointment}
-          disabled={loading}
-        >
-          {loading ? 'Agendando...' : 'Confirmar Agendamento'}
-        </button>
       </div>
     </>
   );
