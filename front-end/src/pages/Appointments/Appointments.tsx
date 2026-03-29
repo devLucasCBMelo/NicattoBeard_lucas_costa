@@ -3,6 +3,7 @@ import type { Barber } from '../../types/barberTypes';
 import Header from '../../components/Header';
 import { api } from '../../services/api';
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
+import styles from './index.module.css';
 
 function generateNextDays(totalDays = 7, startOffset = 0) {
   const days: Date[] = [];
@@ -168,119 +169,145 @@ export default function AppointmentsPage() {
   }
 
   return (
-    <div>
+    <>
       <Header />
-      <h1>Agende seu horário</h1>
+      <div className={styles.container}>
+        <div className={styles.title_container}>
+          <h1 className={styles.title1}>
+            Agende seu <span className={styles.title2}>Horário</span>
+          </h1>
+          <p>
+            Escolha seu barbeiro favorito, a data e o horário ideal para você.
+          </p>
+        </div>
 
-      <section>
-        <h2>1. Escolha o barbeiro</h2>
-        <div>
-          {barbers.map((barber) => (
+        <section>
+          <h2 className={styles.section_title}>
+            <span className={styles.circle_background}>1</span>{' '}
+            <span className={styles.section_title_text}>
+              Escolha o barbeiro
+            </span>
+          </h2>
+          <div>
+            {barbers.map((barber) => (
+              <button
+                key={barber.id}
+                type='button'
+                onClick={() => setSelectedBarberId(barber.id)}
+              >
+                <strong>{barber.name}</strong>
+                <div>{barber.age} anos</div>
+                <div>
+                  {barber.specialties.map((item) => (
+                    <span key={item.specialty.id}>{item.specialty.name}</span>
+                  ))}
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2 className={styles.section_title}>
+            <span className={styles.circle_background}>2</span>{' '}
+            <span className={styles.section_title_text}>Escolha a data</span>
+          </h2>
+
+          <div>
             <button
-              key={barber.id}
               type='button'
-              onClick={() => setSelectedBarberId(barber.id)}
+              onClick={handlePreviousDays}
+              disabled={daysOffset === 0}
             >
-              <strong>{barber.name}</strong>
-              <div>{barber.age} anos</div>
-              <div>
-                {barber.specialties.map((item) => (
-                  <span key={item.specialty.id}>{item.specialty.name}</span>
-                ))}
-              </div>
+              <IoArrowBack />
             </button>
-          ))}
-        </div>
-      </section>
+            {availableDays.map((date) => {
+              const isSelected =
+                selectedDate &&
+                formatDateToYYYYMMDD(selectedDate) ===
+                  formatDateToYYYYMMDD(date);
 
-      <section>
-        <h2>2. Escolha a data</h2>
+              return (
+                <button
+                  key={date.toISOString()}
+                  type='button'
+                  onClick={() => setSelectedDate(date)}
+                  disabled={!selectedBarberId}
+                >
+                  {date.toLocaleDateString('pt-BR', {
+                    weekday: 'short',
+                    day: '2-digit',
+                    month: '2-digit',
+                  })}
+                  {isSelected ? ' (selecionada)' : ''}
+                </button>
+              );
+            })}
+            <button type='button' onClick={handleNextDays}>
+              <IoArrowForward />
+            </button>
+          </div>
+        </section>
 
-        <div>
-          <button
-            type='button'
-            onClick={handlePreviousDays}
-            disabled={daysOffset === 0}
+        <section>
+          <h2 className={styles.section_title}>
+            <span className={styles.circle_background}>3</span>{' '}
+            <span className={styles.section_title_text}>Escolha o horário</span>
+          </h2>
+
+          <div>
+            {timeSlots.map((slot) => {
+              const isUnavailable = unavailableTimes.includes(slot);
+              const isSelected = selectedTime === slot;
+
+              return (
+                <button
+                  key={slot}
+                  type='button'
+                  onClick={() => setSelectedTime(slot)}
+                  disabled={!selectedDate || isUnavailable}
+                >
+                  {slot}
+                  {isSelected ? ' (selecionado)' : ''}
+                  {isUnavailable ? ' (indisponível)' : ''}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        <section>
+          <h2 className={styles.section_title}>
+            <span className={styles.circle_background}>4</span>{' '}
+            <span className={styles.section_title_text}>
+              Escolha a especialidade
+            </span>
+          </h2>
+
+          <select
+            value={selectedSpecialtyId}
+            onChange={(event) => setSelectedSpecialtyId(event.target.value)}
+            disabled={!selectedBarberId}
           >
-            <IoArrowBack />
-          </button>
-          {availableDays.map((date) => {
-            const isSelected =
-              selectedDate &&
-              formatDateToYYYYMMDD(selectedDate) === formatDateToYYYYMMDD(date);
+            <option value=''>Selecione uma especialidade</option>
+            {specialtiesOfSelectedBarber.map((specialty) => (
+              <option key={specialty.id} value={specialty.id}>
+                {specialty.name}
+              </option>
+            ))}
+          </select>
+        </section>
 
-            return (
-              <button
-                key={date.toISOString()}
-                type='button'
-                onClick={() => setSelectedDate(date)}
-                disabled={!selectedBarberId}
-              >
-                {date.toLocaleDateString('pt-BR', {
-                  weekday: 'short',
-                  day: '2-digit',
-                  month: '2-digit',
-                })}
-                {isSelected ? ' (selecionada)' : ''}
-              </button>
-            );
-          })}
-          <button type='button' onClick={handleNextDays}>
-            <IoArrowForward />
-          </button>
-        </div>
-      </section>
+        <section></section>
 
-      <section>
-        <h1>3. Escolha o horário</h1>
-
-        <div>
-          {timeSlots.map((slot) => {
-            const isUnavailable = unavailableTimes.includes(slot);
-            const isSelected = selectedTime === slot;
-
-            return (
-              <button
-                key={slot}
-                type='button'
-                onClick={() => setSelectedTime(slot)}
-                disabled={!selectedDate || isUnavailable}
-              >
-                {slot}
-                {isSelected ? ' (selecionado)' : ''}
-                {isUnavailable ? ' (indisponível)' : ''}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      <section>
-        <h2>4. Escolha a especialidade</h2>
-
-        <select
-          value={selectedSpecialtyId}
-          onChange={(event) => setSelectedSpecialtyId(event.target.value)}
-          disabled={!selectedBarberId}
+        <button
+          type='button'
+          onClick={handleCreateAppointment}
+          disabled={loading}
         >
-          <option value=''>Selecione uma especialidade</option>
-          {specialtiesOfSelectedBarber.map((specialty) => (
-            <option key={specialty.id} value={specialty.id}>
-              {specialty.name}
-            </option>
-          ))}
-        </select>
-      </section>
-
-      <section></section>
-
-      <button
-        type='button'
-        onClick={handleCreateAppointment}
-        disabled={loading}
-      >
-        {loading ? 'Agendando...' : 'Confirmar Agendamento'}
-      </button>
-    </div>
+          {loading ? 'Agendando...' : 'Confirmar Agendamento'}
+        </button>
+      </div>
+    </>
   );
 }

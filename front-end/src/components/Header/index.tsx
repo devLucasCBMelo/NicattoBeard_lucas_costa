@@ -15,46 +15,59 @@ export default function Header() {
   const targetRoute = isLogin ? '/register' : '/login';
 
   const { user } = useAuth();
-  const NavigatetoLoginOrRegister = () => {
-    navigate(targetRoute);
-  };
 
   return (
     <div>
       <div className={styled.container}>
-        <h1>NicattoBeard</h1>
-        <nav className={styled.nav_container}>
-          <div>
-            <CiCalendar />
-            <button onClick={() => navigate('/appointments')}>Agendar</button>
-          </div>
-          <div>
-            <RiScissors2Fill />
-            <button onClick={() => navigate('/my-appointments')}>
+        <h1 className={styled.logo}>NicattoBeard</h1>
+        {user && (
+          <nav className={styled.nav_container}>
+            <button
+              className={styled.button_container}
+              onClick={() => navigate('/appointments')}
+            >
+              <CiCalendar size={25} />
+              Agendar
+            </button>
+
+            <button
+              className={styled.button_container}
+              onClick={() => navigate('/my-appointments')}
+            >
+              <RiScissors2Fill size={25} />
               Meus Agendamentos
             </button>
-          </div>
 
-          <div>
-            <MdOutlineDashboard />
-            <button onClick={() => navigate('/barbers')}>Barbeiros</button>
-          </div>
+            <button
+              className={styled.button_container}
+              onClick={() => navigate('/barbers')}
+            >
+              <MdOutlineDashboard size={25} />
+              Barbeiros
+            </button>
 
-          <div>
-            <BsStars />
-            <button onClick={() => navigate('/specialties')}>
+            <button
+              className={styled.button_container}
+              onClick={() => navigate('/specialties')}
+            >
+              <BsStars size={25} />
               Especialidades
             </button>
+          </nav>
+        )}
+        {user ? (
+          <div className={styled.user}>
+            <p>Olá, {user?.name}</p>
+            <Link to='/dashboard'>Perfil</Link>
           </div>
-          {user ? (
-            <div>
-              <p>Olá, {user?.name}</p>
-              <Link to='/dashboard'>Perfil</Link>
-            </div>
-          ) : (
-            <button onClick={NavigatetoLoginOrRegister}>{buttonText}</button>
-          )}
-        </nav>
+        ) : (
+          <button
+            className={styled.register_button}
+            onClick={() => navigate(targetRoute)}
+          >
+            {buttonText}
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,50 @@
+.container {
+  background-color: #110F0E;
+  padding-top: 2rem;
+}
+
+.title_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  gap: 0.5rem;
+}
+
+.title_container p {
+  color: #988C81;
+}
+
+.title1 {
+  color: #EFECE7;
+  font-family:'Playfair Display', serif;
+}
+
+.title2 {
+  color: #D99D26;
+}
+
+.section_title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.circle_background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #D99D26;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 0.5rem;
+}
+
+.section_title_text {
+  font-family: 'Playfair Display', serif;
+  color: #EFECE7;
+  font-size: 15px;
+}

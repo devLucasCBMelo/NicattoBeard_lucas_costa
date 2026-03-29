@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import styles from './index.module.css';
+import manInBarbershop from '../../assets/homem_no_barbeiro.png';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -16,7 +17,7 @@ export default function LoginPage() {
 
     try {
       await login({ email, password });
-      navigate('/dashboard');
+      navigate('/appointments');
     } catch (error) {
       alert('Erro ao fazer login');
       console.log(error);
@@ -26,34 +27,44 @@ export default function LoginPage() {
   return (
     <>
       <Header />
-      <h1>Login</h1>
-
       <div className={styles.container}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.email_container}>
-            <label>E-mail</label>
-            <input
-              type='email'
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              required
+        <section className={styles.section}>
+          <div className={styles.image_container}>
+            <img
+              className={styles.image}
+              alt='homem cortando o cabelo na barbearia'
+              src={manInBarbershop}
             />
           </div>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <h3>Login</h3>
+            <div className={styles.inputs_container}>
+              <div className={styles.email_container}>
+                <label>E-mail</label>
+                <input
+                  type='email'
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                />
+              </div>
 
-          <div className={styles.password_container}>
-            <label>Senha</label>
-            <input
-              type='password'
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              required
-            />
-          </div>
+              <div className={styles.password_container}>
+                <label>Senha</label>
+                <input
+                  type='password'
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                />
+              </div>
 
-          <button type='submit' className={styles.login_button}>
-            Entrar
-          </button>
-        </form>
+              <button type='submit' className={styles.login_button}>
+                Entrar
+              </button>
+            </div>
+          </form>
+        </section>
       </div>
     </>
   );

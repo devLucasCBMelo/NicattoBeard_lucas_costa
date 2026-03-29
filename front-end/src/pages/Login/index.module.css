@@ -1,18 +1,43 @@
 .container {
+  background-color: #110F0E;
+  height: 80vh;
+  padding-top: 5rem;
+}
+
+.section {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  gap: 5rem;
+
+  background-color: #110F0E;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 
   background-color: #2C2926;
   padding: 2rem;
   border-radius: 10px;
+}
+
+.form h3 {
+  display: flex;
+  justify-content: center;
+  color: #D99D26;
+
+  font-size: 1.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.inputs_container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
 }
 
 .email_container {
@@ -23,12 +48,14 @@
 
 .email_container label {
   color: #D99D26;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .email_container input {
   border-radius: 10px;
   border-width: 1px;
   border-color: #D99D26;
+  padding-left: 10px;
 
   height: 2rem;
 
@@ -44,6 +71,8 @@
 
 .password_container label {
   color: #D99D26;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 10px;
 }
 
 .password_container input {
@@ -61,6 +90,7 @@
   border-radius: 10px;
   border-width: 1px;
   height: 2rem;
+  margin-top: 2rem;
 
   color: #D99D26;
   background-color: #1C1A17;
@@ -70,4 +100,28 @@
   font-family: Arial, Helvetica, sans-serif;
 
   cursor: pointer;
+}
+
+.login_button:hover {
+  color: #1C1A17;
+  background-color: #D99D26;
+}
+
+.login_button:active {
+  background-color: #110F0E;
+  color: #D99D26;
+}
+
+.image_container {
+  background-color: #2C2926;
+  transform: rotate(10deg);
+  border-radius: 10px;
+}
+
+.image {
+  transform: rotate(-10deg);
+  border-radius: 10px;
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
 }
