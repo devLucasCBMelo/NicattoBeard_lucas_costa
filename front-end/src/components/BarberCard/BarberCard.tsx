@@ -4,12 +4,21 @@ import styles from './index.module.css';
 interface CardProps {
   barber: Barber;
   setSelectedBarberId: (id: string) => void;
+  isSelected: boolean | null;
 }
 
-export default function BarberCard({ barber, setSelectedBarberId }: CardProps) {
+export default function BarberCard({
+  barber,
+  setSelectedBarberId,
+  isSelected,
+}: CardProps) {
+  const buttonClass = `${styles.card_container} ${
+    isSelected ? styles.selected : ''
+  }`;
+
   return (
     <button
-      className={styles.card_container}
+      className={buttonClass}
       key={barber.id}
       type='button'
       onClick={() => setSelectedBarberId(barber.id)}

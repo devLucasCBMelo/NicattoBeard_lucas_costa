@@ -161,6 +161,7 @@ export default function AppointmentsPage() {
       await api.post('/appointments', payload);
 
       alert('Agendamento criado com sucesso');
+      setSelectedDate(null);
       setSelectedTime('');
       setSelectedSpecialtyId('');
     } catch (error) {
@@ -192,12 +193,16 @@ export default function AppointmentsPage() {
             </span>
           </h2>
           <div className={styles.section1_content}>
-            {barbers.map((barber) => (
-              <BarberCard
-                barber={barber}
-                setSelectedBarberId={setSelectedBarberId}
-              />
-            ))}
+            {barbers.map((barber) => {
+              const isSelected = selectedBarber?.id === barber.id;
+              return (
+                <BarberCard
+                  isSelected={isSelected}
+                  barber={barber}
+                  setSelectedBarberId={setSelectedBarberId}
+                />
+              );
+            })}
           </div>
         </section>
 
@@ -286,6 +291,7 @@ export default function AppointmentsPage() {
                 value={selectedSpecialtyId}
                 onChange={(event) => setSelectedSpecialtyId(event.target.value)}
                 disabled={!selectedBarberId}
+                className={styles.custom_select}
               >
                 <option value=''>Selecione uma especialidade</option>
                 {specialtiesOfSelectedBarber.map((specialty) => (
@@ -298,17 +304,44 @@ export default function AppointmentsPage() {
           </section>
         )}
 
-        <section className={styles.section5}>
-          <div className={styles.section1_content}>
-            <button
-              type='button'
-              onClick={handleCreateAppointment}
-              disabled={loading}
-            >
-              {loading ? 'Agendando...' : 'Confirmar Agendamento'}
-            </button>
-          </div>
-        </section>
+        {selectedTime && selectedDate && (
+          <section className={styles.section5}>
+            <h2 className={styles.section_title}>
+              <span className={styles.circle_background}>5</span>{' '}
+              <span className={styles.section_title_text}>
+                Confirmar agendamento
+              </span>
+            </h2>
+
+            <div className={styles.section5_content}>
+              <div className={styles.selected_container}>
+                <div className={styles.selected_appointment}>
+                  <p>BARBEIRO</p>
+                  <strong>{selectedBarber?.name}</strong>
+                </div>
+
+                <div className={styles.selected_appointment}>
+                  <p>DATA</p>
+                  <strong>{formatDateToYYYYMMDD(selectedDate)}</strong>
+                </div>
+
+                <div className={styles.selected_appointment}>
+                  <p>HORÁRIO</p>
+                  <strong>{selectedTime}</strong>
+                </div>
+              </div>
+
+              <button
+                type='button'
+                onClick={handleCreateAppointment}
+                disabled={loading}
+                className={styles.confirm_button}
+              >
+                {loading ? 'Agendando...' : 'Confirmar Agendamento'}
+              </button>
+            </div>
+          </section>
+        )}
       </div>
     </>
   );

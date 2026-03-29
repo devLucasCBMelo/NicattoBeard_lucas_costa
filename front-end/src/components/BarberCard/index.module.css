@@ -50,3 +50,9 @@
 
   padding: 0.125rem 0.5rem;
 }
+
+.selected {
+  border-color: #c5a059;
+  background-color: rgba(197, 160, 89, 0.1);
+  box-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
+}
