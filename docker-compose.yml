@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: nicatto_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: barber
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: barber_shop
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./back-end
+    container_name: nicatto_backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://barber:123456@db:5432/barber_shop
+      JWT_SECRET: minha_chave_super_secreta
+    ports:
+      - "3000:3000"
+  frontend:
+    build:
+      context: ./front-end
+    container_name: nicatto_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+volumes:
+  postgres_data:
