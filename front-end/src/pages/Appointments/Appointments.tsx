@@ -7,34 +7,13 @@ import styles from './index.module.css';
 import BarberCard from '../../components/BarberCard/BarberCard';
 import DateButton from '../../components/DateButton/DateButton';
 import TimeSlotButton from '../../components/TimeSlotButton/TimeSlotButton';
-import { formatDateToDDMMYYY, formatDateToYYYYMMDD } from '../../utils';
-
-function generateNextDays(totalDays = 7, startOffset = 0) {
-  const days: Date[] = [];
-  for (let i = 0; i < totalDays; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() + startOffset + i);
-    days.push(date);
-  }
-
-  return days;
-}
-
-function generateTimeSlots() {
-  const slots: string[] = [];
-
-  for (let hour = 8; hour < 18; hour++) {
-    slots.push(`${String(hour).padStart(2, '0')}:00`);
-    slots.push(`${String(hour).padStart(2, '0')}:30`);
-  }
-
-  return slots;
-}
-
-function buildAppointmentDate(date: Date, time: string) {
-  const formattedDate = formatDateToYYYYMMDD(date);
-  return `${formattedDate}T${time}:00`;
-}
+import {
+  buildAppointmentDate,
+  formatDateToDDMMYYY,
+  formatDateToYYYYMMDD,
+  generateNextDays,
+  generateTimeSlots,
+} from '../../utils';
 
 export default function AppointmentsPage() {
   const [barbers, setBarbers] = useState<Barber[]>([]);

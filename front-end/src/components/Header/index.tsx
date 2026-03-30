@@ -38,13 +38,15 @@ export default function Header() {
               Meus Agendamentos
             </button>
 
-            <button
-              className={styled.button_container}
-              onClick={() => navigate('/barbers')}
-            >
-              <MdOutlineDashboard className={styled.icon} size={25} />
-              Barbeiros
-            </button>
+            {user.role === 'ADMIN' && (
+              <button
+                className={styled.button_container}
+                onClick={() => navigate('/barbers')}
+              >
+                <MdOutlineDashboard className={styled.icon} size={25} />
+                Barbeiros
+              </button>
+            )}
 
             <button
               className={styled.button_container}

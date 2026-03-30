@@ -152,95 +152,103 @@ export default function BarbersPage() {
   }, []);
 
   return (
-    <main>
+    <>
       <Header />
-      <div className={styles.title_container}>
-        <h1 className={styles.title1}>
-          Lista de <span className={styles.title2}>Barbeiros</span>
-        </h1>
-        <p>Crie, edite ou delete um barbeiro</p>
-      </div>
+      <div className={styles.content}>
+        <div className={styles.title_container}>
+          <h1 className={styles.title1}>
+            Lista de <span className={styles.title2}>Barbeiros</span>
+          </h1>
+          <p>Crie, edite ou delete um barbeiro</p>
+        </div>
 
-      {isAdmin && (
-        <section>
-          <h2>{editingBarberId ? 'Editar barbeiro' : 'Cadastrar barbeiro'}</h2>
+        {isAdmin && (
+          <section>
+            <h2>
+              {editingBarberId ? 'Editar barbeiro' : 'Cadastrar barbeiro'}
+            </h2>
 
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>Nome</label>
-              <input
-                type='text'
-                value={formData.name}
-                onChange={(event) =>
-                  handleChangeField('name', event.target.value)
-                }
-              />
-            </div>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div>
+                <label>Nome</label>
+                <input
+                  type='text'
+                  value={formData.name}
+                  onChange={(event) =>
+                    handleChangeField('name', event.target.value)
+                  }
+                />
+              </div>
 
-            <div>
-              <label>Idade</label>
-              <input
-                type='number'
-                value={formData.age}
-                onChange={(event) =>
-                  handleChangeField('age', event.target.value)
-                }
-              />
-            </div>
+              <div>
+                <label>Idade</label>
+                <input
+                  type='number'
+                  value={formData.age}
+                  onChange={(event) =>
+                    handleChangeField('age', event.target.value)
+                  }
+                />
+              </div>
 
-            <div>
-              <label>Data de contratação</label>
-              <input
-                type='date'
-                value={formData.hiredAt}
-                onChange={(event) =>
-                  handleChangeField('hiredAt', event.target.value)
-                }
-              />
-            </div>
+              <div>
+                <label>Data de contratação</label>
+                <input
+                  type='date'
+                  value={formData.hiredAt}
+                  onChange={(event) =>
+                    handleChangeField('hiredAt', event.target.value)
+                  }
+                />
+              </div>
 
-            <button type='submit' disabled={submitting}>
-              {submitting
-                ? editingBarberId
-                  ? 'Salvando...'
-                  : 'Criando...'
-                : editingBarberId
-                ? 'Salvar edição'
-                : 'Cadastrar barbeiro'}
-            </button>
-
-            {editingBarberId && (
-              <button type='button' onClick={resetForm}>
-                Cancelar edição
+              <button
+                type='submit'
+                disabled={submitting}
+                className={styles.register_barber_button}
+              >
+                {submitting
+                  ? editingBarberId
+                    ? 'Salvando...'
+                    : 'Criando...'
+                  : editingBarberId
+                  ? 'Salvar edição'
+                  : '+ Novo Barbeiro'}
               </button>
-            )}
-          </form>
-        </section>
-      )}
 
-      <hr />
-
-      <section>
-        <h2>Lista de barbeiros</h2>
-
-        {loading ? (
-          <p>Carregando barbeiros...</p>
-        ) : barbers.length === 0 ? (
-          <p>Nenhum barbeiro cadastrado.</p>
-        ) : (
-          <div className={styles.barbers_list}>
-            {barbers.map((barber) => (
-              <HiredBarberCard
-                key={barber.id}
-                barber={barber}
-                isAdmin={isAdmin}
-                onEdit={handleStartEdit}
-                onDelete={handleDeleteBarber}
-              />
-            ))}
-          </div>
+              {editingBarberId && (
+                <button type='button' onClick={resetForm}>
+                  Cancelar edição
+                </button>
+              )}
+            </form>
+          </section>
         )}
-      </section>
-    </main>
+
+        <hr />
+
+        <section className={styles.section2}>
+          <h2>Lista de barbeiros</h2>
+
+          {loading ? (
+            <p>Carregando barbeiros...</p>
+          ) : barbers.length === 0 ? (
+            <p>Nenhum barbeiro cadastrado.</p>
+          ) : (
+            <div className={styles.barbers_list}>
+              {barbers.map((barber) => (
+                <HiredBarberCard
+                  key={barber.id}
+                  barber={barber}
+                  isAdmin={isAdmin}
+                  onEdit={handleStartEdit}
+                  onDelete={handleDeleteBarber}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
+    </>
   );
 }
