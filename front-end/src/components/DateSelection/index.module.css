@@ -1,4 +1,4 @@
-.section1 {
+.section2 {
   height: 100%;
   margin-bottom: 1rem;
 }
@@ -29,7 +29,7 @@
   font-size: 15px;
 }
 
-.barbers_list {
+.section2_content {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
@@ -38,6 +38,41 @@
   background-color: #1C1A17;
   border-radius: 0.75rem;
   padding: 1.5rem;
+
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.arrow_button {
+  border: 1px solid #333;
+  border-radius: 16px;
+  color: #c5a059;
+  cursor: pointer;
+  background-color: #333;
+  
+  transition: all 0.3s ease;
+}
+  
+.arrow_button:hover {
+  border-color: #c5a059;
+  background-color: #222;
+}
+  
+.arrow_button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
+.dates_list {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
 
   box-sizing: border-box;
   flex-wrap: wrap;
@@ -77,18 +112,10 @@
     rotate: 90deg;
   }
 
-  .section3_content {
-    align-items: center;
-    justify-content: center;
-  }
-
   .selected_container {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
   }
 
-  .confirm_button {
-    justify-content: center;
-  }
 }

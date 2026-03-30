@@ -2,9 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { Barber } from '../../types/barberTypes';
 import Header from '../../components/Header';
 import { api } from '../../services/api';
-import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import styles from './index.module.css';
-import DateButton from '../../components/DateButton/DateButton';
 import TimeSlotButton from '../../components/TimeSlotButton/TimeSlotButton';
 import {
   buildAppointmentDate,
@@ -14,6 +12,7 @@ import {
   generateTimeSlots,
 } from '../../utils';
 import BarberSelection from '../../components/BarberSelection/BarberSelection';
+import DateSelection from '../../components/DateSelection/DateSelection';
 
 export default function AppointmentsPage() {
   const [barbers, setBarbers] = useState<Barber[]>([]);
@@ -164,47 +163,15 @@ export default function AppointmentsPage() {
         />
 
         {selectedBarber && (
-          <section className={styles.section2}>
-            <h2 className={styles.section_title}>
-              <span className={styles.circle_background}>2</span>{' '}
-              <span className={styles.section_title_text}>Escolha a data</span>
-            </h2>
-
-            <div className={styles.section2_content}>
-              <button
-                type='button'
-                onClick={handlePreviousDays}
-                disabled={daysOffset === 0}
-                className={styles.arrow_button}
-              >
-                <IoArrowBack className={styles.icon} />
-              </button>
-              <div className={styles.dates_list}>
-                {availableDays.map((date) => {
-                  const isSelected =
-                    selectedDate &&
-                    formatDateToYYYYMMDD(selectedDate) ===
-                      formatDateToYYYYMMDD(date);
-
-                  return (
-                    <DateButton
-                      date={date}
-                      isSelected={isSelected}
-                      setSelectedDate={setSelectedDate}
-                      selectedBarberId={selectedBarberId}
-                    />
-                  );
-                })}
-              </div>
-              <button
-                type='button'
-                onClick={handleNextDays}
-                className={styles.arrow_button}
-              >
-                <IoArrowForward className={styles.icon} />
-              </button>
-            </div>
-          </section>
+          <DateSelection
+            availableDays={availableDays}
+            daysOffset={daysOffset}
+            handleNextDays={handleNextDays}
+            handlePreviousDays={handlePreviousDays}
+            selectedBarberId={selectedBarberId}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
         )}
 
         {selectedDate && (
