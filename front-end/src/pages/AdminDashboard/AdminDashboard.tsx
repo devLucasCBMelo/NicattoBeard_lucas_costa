@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 import Header from '../../components/Header';
+import styles from './index.module.css';
+import TodaysFuturesAppointmentCard from '../../components/TodaysFuturesAppointmentsCard/TodaysFutureAppointmentCard';
 
 type User = {
   id: string;
@@ -66,104 +68,58 @@ export default function AdminDashboardPage() {
     fetchFutureAppointments();
   }, []);
 
-  function formatDate(dateString: string) {
-    return new Date(dateString).toLocaleDateString('pt-BR');
-  }
-
-  function formatTime(dateString: string) {
-    return new Date(dateString).toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  }
-
   return (
     <div>
       <Header />
-      <h1>Dashboard Admin</h1>
+      <div className={styles.title_container}>
+        <h1 className={styles.title1}>
+          Dashboard do <span className={styles.title2}>ADMIN</span>
+        </h1>
+        <p>Acompanhe os agendamentos do dia e os futuros.</p>
+      </div>
 
-      <section>
+      <section className={styles.section_container}>
         <h2>Agendamentos do Dia</h2>
 
-        {loadingToday ? (
-          <p>Carregando agendamentos do dia...</p>
-        ) : todayAppointments.length === 0 ? (
-          <p>Não há agendamentos para hoje.</p>
-        ) : (
-          <div>
-            {todayAppointments.map((appointment) => (
-              <div key={appointment.id}>
-                <p>
-                  <strong>Cliente:</strong> {appointment.user.name}
-                </p>
-                <p>
-                  <strong>E-mail:</strong> {appointment.user.email}
-                </p>
-                <p>
-                  <strong>Barbeiro:</strong> {appointment.barber.name}
-                </p>
-                <p>
-                  <strong>Especialidade:</strong> {appointment.specialty.name}
-                </p>
-                <p>
-                  <strong>Data:</strong>{' '}
-                  {formatDate(appointment.appointmentDate)}
-                </p>
-                <p>
-                  <strong>Horário:</strong>{' '}
-                  {formatTime(appointment.appointmentDate)}
-                </p>
-                <p>
-                  <strong>Status:</strong> {appointment.status}
-                </p>
-
-                <hr />
-              </div>
-            ))}
-          </div>
-        )}
+        <div className={styles.section_content}>
+          {loadingToday ? (
+            <p>Carregando agendamentos do dia...</p>
+          ) : todayAppointments.length === 0 ? (
+            <p>Não há agendamentos para hoje.</p>
+          ) : (
+            <div className={styles.appointments_list}>
+              {todayAppointments.map((appointment) => (
+                <TodaysFuturesAppointmentCard
+                  key={appointment.id}
+                  appointment={appointment}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
 
-      <section>
+      <hr />
+
+      <section className={styles.section_container}>
         <h2>Próximos Agendamentos</h2>
 
-        {loadingFuture ? (
-          <p>Carregando agendamentos futuros...</p>
-        ) : futureAppointments.length === 0 ? (
-          <p>Não há agendamentos futuros.</p>
-        ) : (
-          <div>
-            {futureAppointments.map((appointment) => (
-              <div key={appointment.id}>
-                <p>
-                  <strong>Cliente:</strong> {appointment.user.name}
-                </p>
-                <p>
-                  <strong>E-mail:</strong> {appointment.user.email}
-                </p>
-                <p>
-                  <strong>Barbeiro:</strong> {appointment.barber.name}
-                </p>
-                <p>
-                  <strong>Especialidade:</strong> {appointment.specialty.name}
-                </p>
-                <p>
-                  <strong>Data:</strong>{' '}
-                  {formatDate(appointment.appointmentDate)}
-                </p>
-                <p>
-                  <strong>Horário:</strong>{' '}
-                  {formatTime(appointment.appointmentDate)}
-                </p>
-                <p>
-                  <strong>Status:</strong> {appointment.status}
-                </p>
-
-                <hr />
-              </div>
-            ))}
-          </div>
-        )}
+        <div className={styles.section_content}>
+          {loadingFuture ? (
+            <p>Carregando agendamentos futuros...</p>
+          ) : futureAppointments.length === 0 ? (
+            <p>Não há agendamentos futuros.</p>
+          ) : (
+            <div className={styles.appointments_list}>
+              {futureAppointments.map((appointment) => (
+                <TodaysFuturesAppointmentCard
+                  key={appointment.id}
+                  appointment={appointment}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );
