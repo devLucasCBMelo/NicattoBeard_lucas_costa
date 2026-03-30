@@ -101,15 +101,27 @@
   text-align: center;
 }
 
+.avatar_container {
+  background-color: #222;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 932px){
   .container {
+    flex-direction: column;
     width: 100%;
     gap: 1rem;
     justify-content: space-evenly;
   }
 
   .logo_container {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .logo {
@@ -117,7 +129,9 @@
   }
 
   .nav_container {
-    display: grid;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
   }
 
   .button_container {

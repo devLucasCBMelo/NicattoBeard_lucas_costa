@@ -4,7 +4,6 @@ import Header from '../../components/Header';
 import { api } from '../../services/api';
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import styles from './index.module.css';
-import BarberCard from '../../components/BarberCard/BarberCard';
 import DateButton from '../../components/DateButton/DateButton';
 import TimeSlotButton from '../../components/TimeSlotButton/TimeSlotButton';
 import {
@@ -14,6 +13,7 @@ import {
   generateNextDays,
   generateTimeSlots,
 } from '../../utils';
+import BarberSelection from '../../components/BarberSelection/BarberSelection';
 
 export default function AppointmentsPage() {
   const [barbers, setBarbers] = useState<Barber[]>([]);
@@ -157,26 +157,11 @@ export default function AppointmentsPage() {
           </p>
         </div>
 
-        <section className={styles.section1}>
-          <h2 className={styles.section_title}>
-            <span className={styles.circle_background}>1</span>{' '}
-            <span className={styles.section_title_text}>
-              Escolha o barbeiro
-            </span>
-          </h2>
-          <div className={styles.barbers_list}>
-            {barbers.map((barber) => {
-              const isSelected = selectedBarber?.id === barber.id;
-              return (
-                <BarberCard
-                  isSelected={isSelected}
-                  barber={barber}
-                  setSelectedBarberId={setSelectedBarberId}
-                />
-              );
-            })}
-          </div>
-        </section>
+        <BarberSelection
+          barbers={barbers}
+          selectedBarberId={selectedBarberId}
+          setSelectedBarberId={setSelectedBarberId}
+        />
 
         {selectedBarber && (
           <section className={styles.section2}>

@@ -9,9 +9,6 @@
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
-
-  margin-right: 10rem;
-  margin-left: 10rem;
 }
 
 .title_container {
@@ -263,7 +260,6 @@ transition: all 0.3s ease;
   border: 1px solid #333;
   color: #fff;
   
-  cursor: pointer;
   transition: all 0.3s ease;
   outline: none;
 }

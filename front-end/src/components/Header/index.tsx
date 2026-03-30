@@ -4,7 +4,8 @@ import { CiCalendar } from 'react-icons/ci';
 import { RiScissors2Fill } from 'react-icons/ri';
 import { MdOutlineDashboard } from 'react-icons/md';
 import { BsStars } from 'react-icons/bs';
-import styled from './index.module.css';
+import styles from './index.module.css';
+import { FaUserCircle } from 'react-icons/fa';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -17,56 +18,58 @@ export default function Header() {
   const { user } = useAuth();
 
   return (
-    <div className={styled.container}>
-      <div className={styled.logo_container}>
-        <h1 className={styled.logo}>Nicatto</h1>
-        <h1 className={styled.logo}>Beard</h1>
+    <div className={styles.container}>
+      <div className={styles.logo_container}>
+        <h1 className={styles.logo}>Nicatto</h1>
+        <h1 className={styles.logo}>Beard</h1>
       </div>
       {user && (
-        <nav className={styled.nav_container}>
+        <nav className={styles.nav_container}>
           <button
-            className={styled.button_container}
+            className={styles.button_container}
             onClick={() => navigate('/appointments')}
           >
-            <CiCalendar className={styled.icon} size={25} />
+            <CiCalendar className={styles.icon} size={25} />
             Agendar
           </button>
 
           <button
-            className={styled.button_container}
+            className={styles.button_container}
             onClick={() => navigate('/my-appointments')}
           >
-            <RiScissors2Fill className={styled.icon} size={25} />
+            <RiScissors2Fill className={styles.icon} size={25} />
             Meus Agendamentos
           </button>
 
           {user.role === 'ADMIN' && (
             <button
-              className={styled.button_container}
+              className={styles.button_container}
               onClick={() => navigate('/barbers')}
             >
-              <MdOutlineDashboard className={styled.icon} size={25} />
+              <MdOutlineDashboard className={styles.icon} size={25} />
               Barbeiros
             </button>
           )}
 
           <button
-            className={styled.button_container}
+            className={styles.button_container}
             onClick={() => navigate('/specialties')}
           >
-            <BsStars className={styled.icon} size={25} />
+            <BsStars className={styles.icon} size={25} />
             Especialidades
           </button>
         </nav>
       )}
       {user ? (
-        <div className={styled.user}>
+        <div className={styles.user}>
           <p>Olá, {user?.name}</p>
-          <Link to='/dashboard'>Perfil</Link>
+          <Link to='/dashboard' className={styles.avatar_container}>
+            <FaUserCircle size={45} color='#333' />
+          </Link>
         </div>
       ) : (
         <button
-          className={styled.register_button}
+          className={styles.register_button}
           onClick={() => navigate(targetRoute)}
         >
           {buttonText}
