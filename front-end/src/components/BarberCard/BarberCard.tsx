@@ -29,7 +29,7 @@ export default function BarberCard({
       </div>
       <strong className={styles.barber_name}>{barber.name}</strong>
       <div className={styles.barber_age}>{barber.age} anos</div>
-      <div>
+      <div className={styles.specialties_list}>
         {barber.specialties.map((item) => (
           <span className={styles.specialty} key={item.specialty.id}>
             {item.specialty.name}
