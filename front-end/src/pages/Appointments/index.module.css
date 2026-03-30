@@ -9,6 +9,9 @@
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
+
+  margin-right: 10rem;
+  margin-left: 10rem;
 }
 
 .title_container {
@@ -64,7 +67,37 @@
   margin-bottom: 1rem;
 }
 
+.barbers_list {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+
+  border: 1px solid #E5E7EB;
+  background-color: #1C1A17;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
 .section1_content {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+
+  border: 1px solid #E5E7EB;
+  background-color: #1C1A17;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+/* ----------------------------   */
+
+.section2_content {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
@@ -81,6 +114,15 @@
 .section2 {
   height: 100%;
   margin-bottom: 1rem;
+}
+
+.dates_list {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 .arrow_button {
@@ -109,13 +151,29 @@ transition: all 0.3s ease;
   height: 30px;
 }
 
+/* ----------------------- */
+
 
 .section3 {
   height: 100%;
   margin-bottom: 1rem;
 }
 
-/* --------  */
+.section3_content {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+
+  border: 1px solid #E5E7EB;
+  background-color: #1C1A17;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+/* ----------------------  */
 
 .section4 {
   height: 100%;
@@ -239,6 +297,7 @@ transition: all 0.3s ease;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
+  width: 200px;
 
   border-radius: 10px;
   border-width: 1px;
@@ -258,4 +317,54 @@ transition: all 0.3s ease;
 .confirm_button:hover {
   color: #1C1A17;
   background-color: #D99D26;
+}
+
+@media screen and (max-width: 932px){
+  .section1 {
+    margin-top: 1rem;
+  }
+
+  .circle_background {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .barbers_list {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .section2_content {
+    flex-direction: column;
+  }
+
+  .dates_list {
+    gap: 0.5rem;
+  
+    box-sizing: border-box;
+    flex-wrap: wrap;
+  }
+
+  .icon {
+    rotate: 90deg;
+  }
+
+  .section3_content {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .selected_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .confirm_button {
+    justify-content: center;
+  }
 }

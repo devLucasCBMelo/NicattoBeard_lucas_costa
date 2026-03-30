@@ -93,3 +93,9 @@
 .section2 {
   padding-top: 2rem;
 }
+
+@media screen and (max-width: 932px){
+  .barbers_list {
+    flex-direction: column;
+  }
+}

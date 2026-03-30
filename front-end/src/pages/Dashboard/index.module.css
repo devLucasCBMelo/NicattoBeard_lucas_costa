@@ -91,3 +91,12 @@
   color: #e74c3c;
   background-color: #fff;
 }
+
+@media screen and (max-width: 932px){
+  .infos_container {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}

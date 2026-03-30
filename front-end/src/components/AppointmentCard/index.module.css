@@ -90,3 +90,17 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media screen and (max-width: 932px){
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cancelButton {
+    align-self: auto;
+    width: 100%;
+  }
+}

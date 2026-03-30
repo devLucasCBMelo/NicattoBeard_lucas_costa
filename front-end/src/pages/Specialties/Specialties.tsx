@@ -290,7 +290,7 @@ export default function SpecialtiesPage() {
 
         <hr />
 
-        <section>
+        <section className={styles.last_section}>
           <h2 className={styles.section_title}>
             Especialidades do barbeiro selecionado
           </h2>

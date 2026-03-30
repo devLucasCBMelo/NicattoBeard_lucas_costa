@@ -7,7 +7,12 @@
   padding: 1rem;
   padding-top: 2rem;
 
-  background-color: #1C1A17;
+  background-color: #2C2926;
+}
+
+.logo_container {
+  display: flex;
+  flex-direction: row;
 }
 
 .nav_container {
@@ -18,17 +23,16 @@
 }
 
 .logo {
-  font-family: 'Cinzel', serif; /* Fonte serifada clássica */
+  font-family: 'Cinzel', serif;
   font-weight: 700;
   font-size: 2.5rem;
-  color: #c5a059; /* Um tom de dourado envelhecido */
+  color: #c5a059;
   text-transform: uppercase;
-  letter-spacing: 0.15em; /* Espaçamento extra entre letras */
+  letter-spacing: 0.15em;
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
   margin: 0;
   cursor: pointer;
 
-  /* Detalhe sutil de hover */
   &:hover {
     color: #e2c285;
     transition: color 0.3s ease;
@@ -95,4 +99,37 @@
 
   cursor: pointer;
   text-align: center;
+}
+
+@media screen and (max-width: 932px){
+  .container {
+    width: 100%;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
+  .logo_container {
+    flex-direction: column;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .nav_container {
+    display: grid;
+  }
+
+  .button_container {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  .user p {
+    display: none;
+  }
 }

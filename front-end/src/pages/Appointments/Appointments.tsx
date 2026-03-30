@@ -164,7 +164,7 @@ export default function AppointmentsPage() {
               Escolha o barbeiro
             </span>
           </h2>
-          <div className={styles.section1_content}>
+          <div className={styles.barbers_list}>
             {barbers.map((barber) => {
               const isSelected = selectedBarber?.id === barber.id;
               return (
@@ -185,7 +185,7 @@ export default function AppointmentsPage() {
               <span className={styles.section_title_text}>Escolha a data</span>
             </h2>
 
-            <div className={styles.section1_content}>
+            <div className={styles.section2_content}>
               <button
                 type='button'
                 onClick={handlePreviousDays}
@@ -194,21 +194,23 @@ export default function AppointmentsPage() {
               >
                 <IoArrowBack className={styles.icon} />
               </button>
-              {availableDays.map((date) => {
-                const isSelected =
-                  selectedDate &&
-                  formatDateToYYYYMMDD(selectedDate) ===
-                    formatDateToYYYYMMDD(date);
+              <div className={styles.dates_list}>
+                {availableDays.map((date) => {
+                  const isSelected =
+                    selectedDate &&
+                    formatDateToYYYYMMDD(selectedDate) ===
+                      formatDateToYYYYMMDD(date);
 
-                return (
-                  <DateButton
-                    date={date}
-                    isSelected={isSelected}
-                    setSelectedDate={setSelectedDate}
-                    selectedBarberId={selectedBarberId}
-                  />
-                );
-              })}
+                  return (
+                    <DateButton
+                      date={date}
+                      isSelected={isSelected}
+                      setSelectedDate={setSelectedDate}
+                      selectedBarberId={selectedBarberId}
+                    />
+                  );
+                })}
+              </div>
               <button
                 type='button'
                 onClick={handleNextDays}
@@ -229,7 +231,7 @@ export default function AppointmentsPage() {
               </span>
             </h2>
 
-            <div className={styles.section1_content}>
+            <div className={styles.section3_content}>
               {timeSlots.map((slot) => {
                 const isUnavailable = unavailableTimes.includes(slot);
                 const isSelected = selectedTime === slot;

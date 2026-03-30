@@ -79,29 +79,31 @@ export default function MyAppointmentsPage() {
   }
 
   return (
-    <div>
+    <main className={styles.container}>
       <Header />
-      <div className={styles.title_container}>
-        <h1 className={styles.title1}>
-          Acompanhe seus <span className={styles.title2}>Agendamentos</span>
-        </h1>
-        <p>Veja aqui seus agendamentos, você pode cancelá-los se quiser.</p>
-      </div>
-
-      {appointments.length === 0 ? (
-        <p>Você ainda não possui agendamentos.</p>
-      ) : (
-        <div className={styles.appointments_list}>
-          {appointments.map((appointment) => (
-            <AppointmentCard
-              key={appointment.id}
-              appointment={appointment}
-              onCancel={handleCancelAppointment}
-              isCanceling={cancelingId === appointment.id}
-            />
-          ))}
+      <div className={styles.content}>
+        <div className={styles.title_container}>
+          <h1 className={styles.title1}>
+            Acompanhe seus <span className={styles.title2}>Agendamentos</span>
+          </h1>
+          <p>Veja aqui seus agendamentos, você pode cancelá-los se quiser.</p>
         </div>
-      )}
-    </div>
+
+        {appointments.length === 0 ? (
+          <p>Você ainda não possui agendamentos.</p>
+        ) : (
+          <div className={styles.appointments_list}>
+            {appointments.map((appointment) => (
+              <AppointmentCard
+                key={appointment.id}
+                appointment={appointment}
+                onCancel={handleCancelAppointment}
+                isCanceling={cancelingId === appointment.id}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </main>
   );
 }
