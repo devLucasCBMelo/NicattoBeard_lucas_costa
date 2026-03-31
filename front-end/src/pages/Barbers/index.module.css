@@ -94,6 +94,29 @@
   padding-top: 2rem;
 }
 
+.cancelButton {
+  align-self: flex-end;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 5px;
+}
+
+.cancelButton:hover:not(:disabled) {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+.cancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media screen and (max-width: 932px){
   .barbers_list {
     flex-direction: column;

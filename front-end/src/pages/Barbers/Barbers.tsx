@@ -217,7 +217,11 @@ export default function BarbersPage() {
               </button>
 
               {editingBarberId && (
-                <button type='button' onClick={resetForm}>
+                <button
+                  type='button'
+                  onClick={resetForm}
+                  className={styles.cancelButton}
+                >
                   Cancelar edição
                 </button>
               )}
