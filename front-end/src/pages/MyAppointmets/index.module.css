@@ -36,14 +36,19 @@
 }
 
 .appointments_list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
   justify-content: space-evenly;
   flex-wrap: wrap;
   margin-top: 4rem;
   margin-left: 4rem;
   margin-right: 4rem;
+  gap: 1rem;
 }
 
 @media screen and (max-width: 932px){
-
+  .appointments_list {
+    display: flex;
+  }
 }
