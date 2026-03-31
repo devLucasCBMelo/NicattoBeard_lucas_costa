@@ -3,16 +3,18 @@ import type { Barber } from '../../types/barberTypes';
 import Header from '../../components/Header';
 import { api } from '../../services/api';
 import styles from './index.module.css';
-import TimeSlotButton from '../../components/TimeSlotButton/TimeSlotButton';
 import {
   buildAppointmentDate,
-  formatDateToDDMMYYY,
   formatDateToYYYYMMDD,
   generateNextDays,
   generateTimeSlots,
 } from '../../utils';
+
 import BarberSelection from '../../components/BarberSelection/BarberSelection';
 import DateSelection from '../../components/DateSelection/DateSelection';
+import TimeSelection from '../../components/TimeSelection/TimeSelection';
+import SpecialtySelection from '../../components/SpecialtySelection/SpecialtySelection';
+import SummaryAndConfirm from '../../components/SummaryAndConfirm/SummaryAndConfirm';
 
 export default function AppointmentsPage() {
   const [barbers, setBarbers] = useState<Barber[]>([]);
@@ -22,7 +24,6 @@ export default function AppointmentsPage() {
   const [selectedSpecialtyId, setSelectedSpecialtyId] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [daysOffset, setDaysOffset] = useState(0);
-
   const [unavailableTimes, setUnavailableTimes] = useState<string[]>([]);
 
   const availableDays = useMemo(() => {
@@ -37,7 +38,6 @@ export default function AppointmentsPage() {
 
   const specialtiesOfSelectedBarber = useMemo(() => {
     if (!selectedBarber) return [];
-
     return selectedBarber.specialties.map((item) => item.specialty);
   }, [selectedBarber]);
 
@@ -79,6 +79,7 @@ export default function AppointmentsPage() {
         const response = await api.get(
           `/barbers/${selectedBarberId}/appointments?date=${formattedDate}`
         );
+
         const bookedTimes = response.data.map(
           (appointment: { appointmentDate: string }) => {
             const date = new Date(appointment.appointmentDate);
@@ -146,6 +147,7 @@ export default function AppointmentsPage() {
   return (
     <main className={styles.container}>
       <Header />
+
       <div className={styles.content}>
         <div className={styles.title_container}>
           <h1 className={styles.title1}>
@@ -165,108 +167,42 @@ export default function AppointmentsPage() {
         {selectedBarber && (
           <DateSelection
             availableDays={availableDays}
-            daysOffset={daysOffset}
-            handleNextDays={handleNextDays}
-            handlePreviousDays={handlePreviousDays}
-            selectedBarberId={selectedBarberId}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            selectedBarberId={selectedBarberId}
+            daysOffset={daysOffset}
+            handlePreviousDays={handlePreviousDays}
+            handleNextDays={handleNextDays}
           />
         )}
 
         {selectedDate && (
-          <section className={styles.section3}>
-            <h2 className={styles.section_title}>
-              <span className={styles.circle_background}>3</span>{' '}
-              <span className={styles.section_title_text}>
-                Escolha o horário
-              </span>
-            </h2>
-
-            <div className={styles.section3_content}>
-              {timeSlots.map((slot) => {
-                const isUnavailable = unavailableTimes.includes(slot);
-                const isSelected = selectedTime === slot;
-
-                return (
-                  <TimeSlotButton
-                    key={slot}
-                    isSelected={isSelected}
-                    isUnavailable={isUnavailable}
-                    selectedDate={selectedDate}
-                    setSelectedTime={setSelectedTime}
-                    slot={slot}
-                  />
-                );
-              })}
-            </div>
-          </section>
+          <TimeSelection
+            timeSlots={timeSlots}
+            unavailableTimes={unavailableTimes}
+            selectedTime={selectedTime}
+            selectedDate={selectedDate}
+            setSelectedTime={setSelectedTime}
+          />
         )}
 
         {selectedTime && (
-          <section className={styles.section4}>
-            <h2 className={styles.section_title}>
-              <span className={styles.circle_background}>4</span>{' '}
-              <span className={styles.section_title_text}>
-                Escolha a especialidade
-              </span>
-            </h2>
-
-            <div className={styles.section1_content}>
-              <select
-                value={selectedSpecialtyId}
-                onChange={(event) => setSelectedSpecialtyId(event.target.value)}
-                disabled={!selectedBarberId}
-                className={styles.custom_select}
-              >
-                <option value=''>Selecione uma especialidade</option>
-                {specialtiesOfSelectedBarber.map((specialty) => (
-                  <option key={specialty.id} value={specialty.id}>
-                    {specialty.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </section>
+          <SpecialtySelection
+            selectedSpecialtyId={selectedSpecialtyId}
+            setSelectedSpecialtyId={setSelectedSpecialtyId}
+            specialties={specialtiesOfSelectedBarber}
+            disabled={!selectedBarberId}
+          />
         )}
 
         {selectedTime && selectedDate && (
-          <section className={styles.section5}>
-            <h2 className={styles.section_title}>
-              <span className={styles.circle_background}>5</span>{' '}
-              <span className={styles.section_title_text}>
-                Confirmar agendamento
-              </span>
-            </h2>
-
-            <div className={styles.section5_content}>
-              <div className={styles.selected_container}>
-                <div className={styles.selected_appointment}>
-                  <p>BARBEIRO</p>
-                  <strong>{selectedBarber?.name}</strong>
-                </div>
-
-                <div className={styles.selected_appointment}>
-                  <p>DATA</p>
-                  <strong>{formatDateToDDMMYYY(selectedDate)}</strong>
-                </div>
-
-                <div className={styles.selected_appointment}>
-                  <p>HORÁRIO</p>
-                  <strong>{selectedTime}</strong>
-                </div>
-              </div>
-
-              <button
-                type='button'
-                onClick={handleCreateAppointment}
-                disabled={loading}
-                className={styles.confirm_button}
-              >
-                {loading ? 'Agendando...' : 'Confirmar Agendamento'}
-              </button>
-            </div>
-          </section>
+          <SummaryAndConfirm
+            barberName={selectedBarber?.name}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            loading={loading}
+            handleCreateAppointment={handleCreateAppointment}
+          />
         )}
       </div>
     </main>
